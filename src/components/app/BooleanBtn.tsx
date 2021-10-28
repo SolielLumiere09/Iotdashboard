@@ -10,14 +10,17 @@ interface Props {
     title : string 
     iconSize : string 
     iconName : string
-
+    onClick : (status : boolean) => void
 }
 
-export const BooleanBtn = ({title, iconSize, iconName} : Props) => {
+export const BooleanBtn = ({title, iconSize, iconName, onClick} : Props) => {
     const [colorSwitch, setColorSwitch] = useState(false)
-
-
     const Icon = React.createElement(Icons[iconName])
+
+    const handleClick = () => {
+        setColorSwitch(!colorSwitch)
+        onClick(!colorSwitch)
+    }
 
     return (
         <BackgroundColorContext.Consumer>
@@ -33,7 +36,7 @@ export const BooleanBtn = ({title, iconSize, iconName} : Props) => {
                             {Icon}
 
                             </IconContext.Provider>
-                            <Button color={classMappingColors[color]} onClick={() => setColorSwitch(!colorSwitch)}>On/Off</Button>
+                            <Button color={classMappingColors[color]}  onClick={handleClick}>On/Off</Button>
                         </div>
                     </CardBody>
                 </Card>

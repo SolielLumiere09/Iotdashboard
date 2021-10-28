@@ -14,13 +14,13 @@
     "strict": false,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "alwaysStrict": false,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
   },
   "include": [
     "src"
