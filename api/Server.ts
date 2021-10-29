@@ -4,8 +4,9 @@ import { userRegisterEndpoint } from './endpoints/UserRegister';
 import { userLoginEndpoint } from './endpoints/UserLogin';
 import {config} from 'dotenv'
 import cors from 'cors'
+import jwt from 'jsonwebtoken'
 
-const {parsed : {REACT_APP_MONGO_DB_ENDPOINT, REACT_APP_MONGODB_USER, REACT_APP_MONGO_DB_PASSWORD, REACT_APP_DATABASE}} = config({
+const {parsed : {REACT_APP_MONGO_DB_ENDPOINT, REACT_APP_MONGODB_USER, REACT_APP_MONGO_DB_PASSWORD, REACT_APP_DATABASE, TOKEN_AUTH}} = config({
     path : '../.env'
 })
 
@@ -17,11 +18,16 @@ app.use(cors({
 
 }))
 
-
 //set middleware
-app.use((req, res, next) => {
-  
-    next();
+app.use('/api',(req, res, next) => {
+    const token = req.header('auth-token')
+    if (!token) return res.status(401).json({ error: 'Access Denied' })
+    try {
+        jwt.verify(token, TOKEN_AUTH)
+        next() 
+    } catch (error) {
+        res.status(400).json({error: 'Invalid Token'})
+    }
 })
 
 //set endpoints
@@ -47,3 +53,6 @@ mongoose.connect(REACT_APP_MONGO_DB_ENDPOINT, {
     console.log("error de conexion");
     
 });
+
+
+export {TOKEN_AUTH}

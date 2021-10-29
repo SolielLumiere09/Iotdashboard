@@ -1,6 +1,8 @@
 import express from 'express'
 import bcrypt from 'bcrypt'
 import { User, Attributes } from '../models/Users'
+import jwt from 'jsonwebtoken'
+import { TOKEN_AUTH } from '../Server'
 
 const userLoginEndpoint = express.Router()
 
@@ -18,9 +20,14 @@ userLoginEndpoint.get<any, any, any, any, Attributes>('/loginUser', async (req, 
         })
 
         if(bcrypt.compareSync(password, user.password)){
+            
+            const token = jwt.sign({
+                name : user.userName,
+                id : user.id
+            }, TOKEN_AUTH)
+            
             response.accepted = true;
-
-            response.token = user.id
+            response.token = token
         }
 
 

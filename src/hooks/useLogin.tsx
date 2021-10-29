@@ -57,6 +57,7 @@ export const useLogin = () => {
             })
 
             if(data.accepted){
+                console.log(data)
                 history.push('/admin/dashboard')
                 setOpenNotification(false)
             }else {
