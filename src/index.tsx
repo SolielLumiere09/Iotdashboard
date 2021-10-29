@@ -11,6 +11,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import ThemeContextWrapper from "./components/core/ThemeWrapper/ThemeWrapper";
 import BackgroundColorWrapper from "./components/core/BackgroundColorWrapper/BackgroundColorWrapper";
+import { WelcomeView } from './views/app/WelcomeView';
 
 ReactDOM.render(
   <ThemeContextWrapper>
@@ -18,8 +19,10 @@ ReactDOM.render(
       <BrowserRouter>
         <Switch>
           <Route path="/admin" render={(props) => <AdminLayout />} />
+          <Route path="/WelcomePage" render={(props) => <WelcomeView />} />
+          
           {/* <Route path="/rtl" render={(props) => <RTLLayout {...props} />} /> */}
-          <Redirect from="/" to="/admin/dashboard" />
+          <Redirect from="/" to="/WelcomePage" />
         </Switch>
       </BrowserRouter>
     </BackgroundColorWrapper>
