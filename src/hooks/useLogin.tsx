@@ -27,7 +27,7 @@ export const useLogin = () => {
             message : 'Please verify your username or password',
             type : 'danger',
             icon : 'tim-icons icon-bell-55',
-            autoDismiss : 0,
+            autoDismiss : 5,
             closeButton : true
         }
     }, [])
