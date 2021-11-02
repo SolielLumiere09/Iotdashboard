@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { useRef, useState } from 'react';
+import { useEffect } from 'react'
+import { useState, useMemo } from 'react';
 import mqtt from 'mqtt';
 import { Display } from '../Display';
 
@@ -18,16 +18,20 @@ export const DisplayMqtt = ({measure, property, title, topicToSubscribe, unit} :
     const [currentMeasure, setCurrentMeasure] = useState(measure)
     
     
-    const client = useRef(mqtt.connect('ws://broker.emqx.io/mqtt', {
-        port : 8083,
-        protocol : 'ws',
-        username : 'dcsdcsdcasd' + Math.random() * 1000
-    })).current
+    const client = useMemo(() => {
+        return(
+            mqtt.connect('http:/localhost', {
+            port : 8083,
+            protocol : 'ws',
+            clientId : 'dcsdcsdcasd' + Math.random() * 1000,
+            path: "/mqtt"
+        }))
+    }, [])
 
 
     useEffect(() => {
         
-        client.on('connect', () => {
+        client.once('connect', () => {
             console.log("connected")
         })
 
@@ -36,7 +40,7 @@ export const DisplayMqtt = ({measure, property, title, topicToSubscribe, unit} :
             
         })
 
-        client.on('message', (topic, payload) => {
+        client.once('message', (topic, payload) => {
             const msg = JSON.parse(payload.toString())
             if(topic === topicToSubscribe && msg[property] !== undefined){
                 
@@ -44,9 +48,6 @@ export const DisplayMqtt = ({measure, property, title, topicToSubscribe, unit} :
             } 
         })
 
-        return () => {
-            
-        }
     }, [client, property, topicToSubscribe])  
     
     

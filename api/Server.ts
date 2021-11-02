@@ -2,7 +2,9 @@ import express from 'express'
 import mongoose from 'mongoose';
 import { userRegisterEndpoint } from './endpoints/UserRegister';
 import { userLoginEndpoint } from './endpoints/UserLogin';
+import { MQTT } from './endpoints/MQTT';
 import {config} from 'dotenv'
+import bodyParser from 'body-parser';
 import cors from 'cors'
 import jwt from 'jsonwebtoken'
 
@@ -15,8 +17,8 @@ const app = express()
 //set the cors
 app.use(cors({
     origin : '*'
-
 }))
+app.use(bodyParser())
 
 //set middleware
 app.use('/api',(req, res, next) => {
@@ -33,9 +35,10 @@ app.use('/api',(req, res, next) => {
 //set endpoints
 app.use(userRegisterEndpoint)
 app.use(userLoginEndpoint)
-
+app.use(MQTT);
 
 console.clear();
+
 app.listen(3001, () => {
     console.log("listening port 3001")
 });

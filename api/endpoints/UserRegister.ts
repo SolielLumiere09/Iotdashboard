@@ -4,45 +4,51 @@ import bcrypt from 'bcrypt'
 
 const userRegisterEndpoint = express.Router()
 
-userRegisterEndpoint.post<any, any, any, any, Attributes>('/userRegister', async (req, res) => {
-
-    const {password, userName} = req.query
-
+userRegisterEndpoint.post<any, any, any, Attributes, any>('/userRegister', async (req, res) => {
     const response = {
         accepted : false,
         msg : ''
     }
 
-    if(userName !== undefined && password !== undefined){
-        
-
-        if(await User.exists({ userName })) {
-            response.msg = "User already registered"
-        }
-        else {
-
-            const hash = bcrypt.hashSync(password, 10)
-            
-            const newUser = new User({
-                userName : req.query.userName,
-                password : hash
-            })
+    try{
+        const {password, userName} = req.body
     
-            const {errors} = await newUser.save()
-               
-            if(errors){ 
-               response.msg = "There was an error registering the user"
+      
+        if(userName !== undefined && password !== undefined){
+            
+    
+            if(await User.exists({ userName })) {
+                response.msg = "User already registered"
             }
             else {
-                response.accepted = true 
-                response.msg = "User registered sucessfully"
-            }
-        }
     
+                const hash = bcrypt.hashSync(password, 10)
+                
+                const newUser = new User({
+                    userName,
+                    password : hash
+                })
+        
+                const {errors} = await newUser.save()
+                   
+                if(errors){ 
+                   response.msg = "There was an error registering the user"
+                }
+                else {
+                    response.accepted = true 
+                    response.msg = "User registered sucessfully"
+                }
+            }
+        
+        }
+        else {
+            response.msg = "No matching parameters!"
+        }
+
+    }catch(e){
+        response.msg = "There was an error"
     }
-    else {
-        response.msg = "No matching parameters!"
-    }
+    
 
 
     res.send(response)

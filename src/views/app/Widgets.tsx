@@ -4,9 +4,6 @@ import { DisplayMqtt } from '../../components/app/Mqtt/DisplayMqtt';
 
 export const Widgets = () => {
 
-
-
-
     return (
         <>
             <div className="content">

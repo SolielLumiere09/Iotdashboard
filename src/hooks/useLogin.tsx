@@ -17,6 +17,7 @@ interface fields {
 export const useLogin = () => {
     const { register, handleSubmit } = useForm<fields>();
     const [openNotification, setOpenNotification] = useState(false)
+    const [message, setMessage] = useState('')
     const history = useHistory()
     const notify = useRef(null)
 
@@ -24,13 +25,13 @@ export const useLogin = () => {
     const options = useMemo(() => {
         return {
             place : 'tc',
-            message : 'Please verify your username or password',
+            message,
             type : 'danger',
             icon : 'tim-icons icon-bell-55',
             autoDismiss : 5,
             closeButton : true
         }
-    }, [])
+    }, [message])
 
     const openNotify = useCallback(() => {
         if(notify.current !== null)
@@ -48,6 +49,7 @@ export const useLogin = () => {
 
     const handleLogin = async (data : fields) => {
         const {password,userName} = data
+        console.log("requesting...")
         try{
             const {data} = await axios.get<Response>('http://localhost:3001/loginUser', {
                 params : {
@@ -62,12 +64,14 @@ export const useLogin = () => {
                 setOpenNotification(false)
             }else {
                 //show a message because the password or username is incorrec
+                setMessage('Please verify your username or password')
                 setOpenNotification(true)
             }
 
             console.log(data)
         }catch(e){
             //The endpoint doesn't exists
+            setMessage('Conexion Error! Please try again later')
             setOpenNotification(true)
         }
 

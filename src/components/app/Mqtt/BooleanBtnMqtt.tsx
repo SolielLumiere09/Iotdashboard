@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import mqtt from 'mqtt'
 import { BooleanBtn } from '../BooleanBtn'
+import { useMemo } from 'react';
 
 interface Props {
     title : string 
@@ -14,23 +15,24 @@ interface Props {
 
 export const BooleanBtnMqtt = ({title, iconSize, iconName, publishTopic, propertyName} : Props) => {
     
-    const client = useRef(mqtt.connect('ws://broker.emqx.io/mqtt', {
-        port : 8083,
-        protocol : 'ws',
-        username : 'dcsdcsdcasd' + Math.random() * 1000
-    })).current
+    const client = useMemo(() => {
+        return (
+            mqtt.connect("http:/localhost", {
+                port : 8083,
+                protocol : 'ws',
+                clientId : 'dcsdcsdcasd' + Math.random() * 1000,
+                path : '/mqtt'
+            })
+        )
+    }, [])
 
 
     useEffect(() => {
         
-        client.on('connect', () => {
+        client.once('connect', () => {
             console.log("connected")
         })
 
-
-        return () => {
-            
-        }
     }, [client])  
 
     return (
