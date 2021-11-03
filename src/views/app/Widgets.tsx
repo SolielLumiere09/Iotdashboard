@@ -9,7 +9,7 @@ export const Widgets = () => {
             <div className="content">
                 <Row>
                     <Col xs={12} lg={3}>
-                        <DisplayMqtt title="Temperature" measure={123} unit="°C" topicToSubscribe="xawstw/house/temperature" property="measure"/>
+                        <DisplayMqtt deviceId="myDisplayId" title="Temperature" unit="°C" topicToSubscribe="xawstw/house/temperature" property="measure"/>
                     </Col>
                     <Col xs={12} lg={3}>
                         <BooleanBtnMqtt title="Bulb" iconSize="5em" iconName={'FaRocket'} propertyName="bulbStatus" publishTopic="xawstw/house/bulb"/>

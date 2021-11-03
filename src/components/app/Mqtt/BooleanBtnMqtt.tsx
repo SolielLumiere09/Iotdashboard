@@ -37,7 +37,7 @@ export const BooleanBtnMqtt = ({title, iconSize, iconName, publishTopic, propert
 
     return (
         <>
-            <BooleanBtn title={title} iconSize={iconSize} iconName={iconName} onClick={(status) => {
+            <BooleanBtn deviceId="myId" title={title} iconSize={iconSize} iconName={iconName} onClick={(status) => {
                 client.publish(publishTopic, JSON.stringify({
                     [propertyName] : status
                 }))

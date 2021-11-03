@@ -4,6 +4,9 @@ import { Card, CardBody, CardText, Button } from 'reactstrap';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import Notify from 'react-notification-alert';
+import { useRef } from 'react';
+import { useNotification } from '../../hooks/useNotification';
 
 interface Response {
     msg : string,
@@ -20,6 +23,8 @@ interface fields {
 export const Register = () => {
     const history = useHistory()
     const { register, handleSubmit } = useForm<fields>();
+    const notification = useRef(null)
+    const {openNotification} = useNotification(notification)
 
 
     const style : React.CSSProperties = {
@@ -32,29 +37,26 @@ export const Register = () => {
     }
 
 
-    const handleRegister = async (data : fields) => {
-        console.log(data);
-        
-        const {password, userName} = data
+    const handleRegister = async (formData : fields) => {
         
         try{
+            const {password, userName} = formData
+        
             const {data} = await axios.post<Response>('http://localhost:3001/userRegister', {
                 userName,
                 password
             })
 
-            console.log(data)
-
             if(data.accepted){
-                alert("registrado con exito " + data.msg)
+                openNotification(data.msg)
             }
             else {
-                alert("No se pudo registrar " + data.msg)
+                openNotification(data.msg)
             }
 
 
         }catch(e){
-            alert("No se puede conectar con el servidor")
+            openNotification("Can't connect to the server")
         }
      
     }
@@ -77,8 +79,8 @@ export const Register = () => {
                     </div>
     
                 </CardBody>
-               
             </Card>
+            <Notify ref={notification}/>
     </>
     )
 }

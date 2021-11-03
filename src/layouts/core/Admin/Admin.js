@@ -29,7 +29,7 @@ import FixedPlugin from "components/core/FixedPlugin/FixedPlugin.js";
 import routes from "routes";
 
 import logo from "assets/img/react-logo.png";
-import { BackgroundColorContext } from "contexts/BackgroundColorContext";
+import { BackgroundColorContext } from "contexts/core/BackgroundColorContext";
 
 var ps;
 

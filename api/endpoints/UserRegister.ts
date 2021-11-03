@@ -14,7 +14,7 @@ userRegisterEndpoint.post<any, any, any, Attributes, any>('/userRegister', async
         const {password, userName} = req.body
     
       
-        if(userName !== undefined && password !== undefined){
+        if(userName !== undefined && password !== undefined && userName.length > 0 && password.length > 0){
             
     
             if(await User.exists({ userName })) {

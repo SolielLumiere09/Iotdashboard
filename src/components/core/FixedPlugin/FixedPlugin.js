@@ -19,8 +19,8 @@ import React from "react";
 
 // reactstrap components
 import { Dropdown, DropdownToggle, Badge } from "reactstrap";
-import { ThemeContext, themes } from "contexts/ThemeContext";
-import { backgroundColors } from "contexts/BackgroundColorContext";
+import { ThemeContext, themes } from "contexts/core/ThemeContext";
+import { backgroundColors } from "contexts/core/BackgroundColorContext";
 
 function FixedPlugin(props) {
   const [dropDownIsOpen, setdropDownIsOpen] = React.useState(false);

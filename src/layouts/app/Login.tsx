@@ -2,13 +2,14 @@ import React from 'react'
 import { Button, Card, CardBody, CardText } from 'reactstrap'
 import background from 'assets/img/card-primary.png'
 import { useLogin } from '../../hooks/useLogin';
-import Notify from 'react-notification-alert';
 import { useHistory } from 'react-router-dom';
-
+import Notify from 'react-notification-alert';
+import { useRef } from 'react';
 
 export const Login = () => {
+    const notification = useRef(null)
     const history = useHistory()
-    const {handleSubmit, register, handleLogin, notify} = useLogin()
+    const {handleSubmit, register, handleLogin} = useLogin(notification)
 
     const style : React.CSSProperties = {
         position : 'absolute',
@@ -36,7 +37,7 @@ export const Login = () => {
                     </div>                
                 </CardBody>
             </Card>
-            <Notify ref={notify}/>
+            <Notify ref={notification}/>
         </>
     )
 }

@@ -1,7 +1,7 @@
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from 'axios'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useNotification } from './useNotification';
 
 export interface Response {
     accepted: boolean;
@@ -13,44 +13,17 @@ interface fields {
     password : string
 }
 
-
-export const useLogin = () => {
+export const useLogin = (ref :  React.MutableRefObject<any>) => {
     const { register, handleSubmit } = useForm<fields>();
-    const [openNotification, setOpenNotification] = useState(false)
-    const [message, setMessage] = useState('')
+    const {openNotification} = useNotification(ref);
     const history = useHistory()
-    const notify = useRef(null)
-
-    
-    const options = useMemo(() => {
-        return {
-            place : 'tc',
-            message,
-            type : 'danger',
-            icon : 'tim-icons icon-bell-55',
-            autoDismiss : 5,
-            closeButton : true
-        }
-    }, [message])
-
-    const openNotify = useCallback(() => {
-        if(notify.current !== null)
-            notify.current.notificationAlert(options)
-     }, [options])
-
-    useEffect(() => {
-        if(openNotification){
-            openNotify()
-            setOpenNotification(false)
-        }
-    }, [openNotification, openNotify])
 
 
-
-    const handleLogin = async (data : fields) => {
-        const {password,userName} = data
-        console.log("requesting...")
+    const handleLogin = async (formFields : fields) => {
         try{
+            const {password,userName} = formFields
+            
+            console.log("requesting...")
             const {data} = await axios.get<Response>('http://localhost:3001/loginUser', {
                 params : {
                     userName,
@@ -61,18 +34,15 @@ export const useLogin = () => {
             if(data.accepted){
                 console.log(data)
                 history.push('/admin/dashboard')
-                setOpenNotification(false)
-            }else {
-                //show a message because the password or username is incorrec
-                setMessage('Please verify your username or password')
-                setOpenNotification(true)
+               
+              
+            }else {    
+              openNotification("Verify your username and password")
             }
 
             console.log(data)
         }catch(e){
-            //The endpoint doesn't exists
-            setMessage('Conexion Error! Please try again later')
-            setOpenNotification(true)
+            openNotification("Can't connect to the server")
         }
 
     }
@@ -82,6 +52,5 @@ export const useLogin = () => {
         register,
         handleSubmit,
         handleLogin,
-        notify,
     }
 }
