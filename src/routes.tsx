@@ -1,4 +1,5 @@
 import { Dashboard } from "views/app/Dashboard";
+import { Devices } from "views/app/Devices";
 import { Widgets } from "views/app/Widgets";
 
 /*
@@ -63,6 +64,14 @@ var routes : Routes[] = [
     icon: "tim-icons icon-chart-pie-36",
     component: Dashboard,
     layout: "/admin",
+  },
+  {
+    path : "/devices",
+    name : "Devices",
+    rtlName : 'Omar Valdivia',
+    icon : "tim-icons icon-chart-pie-36",
+    component : Devices,
+    layout : '/admin'
   },
   {
     path : '/Widgets',

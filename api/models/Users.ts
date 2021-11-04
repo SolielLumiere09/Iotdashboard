@@ -7,8 +7,14 @@ interface Attributes {
 }
 
 const schema = new Schema<Attributes>({
-    userName : String,
-    password : String
+    userName : {
+        required : true,
+        type : String,
+    },
+    password : {
+        required : true,
+        type : String
+    }
 })
 
 const User = moongose.model('Users', schema)

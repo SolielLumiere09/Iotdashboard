@@ -334,29 +334,21 @@ let chartExample3 = {
 // // // used inside src/views/Dashboard.js
 // #########################################
 const chartExample4 = {
-  data: (canvas) => {
-    let ctx = canvas.getContext("2d");
-
-    let gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke.addColorStop(1, "rgba(66,134,121,0.15)");
-    gradientStroke.addColorStop(0.4, "rgba(66,134,121,0.0)"); //green colors
-    gradientStroke.addColorStop(0, "rgba(66,134,121,0)"); //green colors
-
+  data: (color) => {
+    
     return {
       labels: ["JUL", "AUG", "SEP", "OCT", "NOV"],
       datasets: [
         {
           label: "My First dataset",
-          fill: true,
-          backgroundColor: gradientStroke,
-          borderColor: "#00d6b4",
+          fill: false,
+          borderColor: color, //primaru
           borderWidth: 2,
           borderDash: [],
           borderDashOffset: 0.0,
-          pointBackgroundColor: "#00d6b4",
+          pointBackgroundColor: color, //primary
           pointBorderColor: "rgba(255,255,255,0)",
-          pointHoverBackgroundColor: "#00d6b4",
+          pointHoverBackgroundColor: color, //primaru
           pointBorderWidth: 20,
           pointHoverRadius: 4,
           pointHoverBorderWidth: 15,

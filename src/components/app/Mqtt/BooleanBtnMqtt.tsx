@@ -1,9 +1,8 @@
-import { useEffect } from 'react'
-import mqtt from 'mqtt'
 import { BooleanBtn } from '../BooleanBtn'
-import { useMemo } from 'react';
+import { useBooleanBtnMqtt } from '../../../hooks/useBooleanBtnMqtt';
 
 interface Props {
+    deviceId : string
     title : string 
     iconSize : string 
     iconName : string
@@ -13,34 +12,13 @@ interface Props {
 
 
 
-export const BooleanBtnMqtt = ({title, iconSize, iconName, publishTopic, propertyName} : Props) => {
-    
-    const client = useMemo(() => {
-        return (
-            mqtt.connect("http:/localhost", {
-                port : 8083,
-                protocol : 'ws',
-                clientId : 'dcsdcsdcasd' + Math.random() * 1000,
-                path : '/mqtt'
-            })
-        )
-    }, [])
-
-
-    useEffect(() => {
-        
-        client.once('connect', () => {
-            console.log("connected")
-        })
-
-    }, [client])  
+export const BooleanBtnMqtt = ({deviceId, title, iconSize, iconName, publishTopic, propertyName} : Props) => {
+    const {publishPayload} = useBooleanBtnMqtt(deviceId, publishTopic, propertyName)
 
     return (
         <>
-            <BooleanBtn deviceId="myId" title={title} iconSize={iconSize} iconName={iconName} onClick={(status) => {
-                client.publish(publishTopic, JSON.stringify({
-                    [propertyName] : status
-                }))
+            <BooleanBtn deviceId={deviceId} title={title} iconSize={iconSize} iconName={iconName} onClick={(status) => {
+                publishPayload(status)
             }}/>  
         </>
     )
