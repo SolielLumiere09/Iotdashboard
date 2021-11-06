@@ -21,3 +21,6 @@ export const DisplayMqtt = ({deviceId, property, title, topicToSubscribe, unit} 
         </>
     )
 }
+
+
+export type {Props }

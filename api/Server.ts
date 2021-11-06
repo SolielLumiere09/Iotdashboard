@@ -2,13 +2,15 @@ import express from 'express'
 import mongoose from 'mongoose';
 import { userRegisterEndpoint } from './endpoints/UserRegister';
 import { userLoginEndpoint } from './endpoints/UserLogin';
+import {addWidgetEnpoint} from './endpoints/AddWidget'
 import { MQTT } from './endpoints/MQTT';
 import {config} from 'dotenv'
 import bodyParser from 'body-parser';
 import cors from 'cors'
 import jwt from 'jsonwebtoken'
+import { getWidgetsEndpoint } from './endpoints/GetWidgets';
 
-const {parsed : {REACT_APP_MONGO_DB_ENDPOINT, REACT_APP_MONGODB_USER, REACT_APP_MONGO_DB_PASSWORD, REACT_APP_DATABASE, TOKEN_AUTH}} = config({
+const {parsed : {REACT_APP_MONGO_DB_ENDPOINT, REACT_APP_MONGODB_USER, REACT_APP_MONGO_DB_PASSWORD, REACT_APP_DATABASE, REACT_APP_TOKEN_AUTH}} = config({
     path : '../.env'
 })
 
@@ -22,19 +24,22 @@ app.use(bodyParser())
 
 //set middleware
 app.use('/api',(req, res, next) => {
-    const token = req.header('auth-token')
-    if (!token) return res.status(401).json({ error: 'Access Denied' })
-    try {
-        jwt.verify(token, TOKEN_AUTH)
-        next() 
-    } catch (error) {
-        res.status(400).json({error: 'Invalid Token'})
-    }
+    // const token = req.header('auth-token')
+    // if (!token) return res.status(401).json({ error: 'Access Denied' })
+    // try {
+    //     jwt.verify(token, REACT_APP_TOKEN_AUTH)
+    //     next() 
+    // } catch (error) {
+    //     res.status(400).json({error: 'Invalid Token'})
+    // }
+    next()
 })
 
 //set endpoints
 app.use(userRegisterEndpoint)
 app.use(userLoginEndpoint)
+app.use(addWidgetEnpoint)
+app.use(getWidgetsEndpoint)
 app.use(MQTT);
 
 console.clear();
@@ -58,4 +63,4 @@ mongoose.connect(REACT_APP_MONGO_DB_ENDPOINT, {
 });
 
 
-export {TOKEN_AUTH}
+export {REACT_APP_TOKEN_AUTH}

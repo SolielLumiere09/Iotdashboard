@@ -6,6 +6,7 @@ import { useNotification } from './useNotification';
 export interface Response {
     accepted: boolean;
     token:    string;
+    msg : string
 }
 
 interface fields {
@@ -17,7 +18,6 @@ export const useLogin = (ref :  React.MutableRefObject<any>) => {
     const { register, handleSubmit } = useForm<fields>();
     const {openNotification} = useNotification(ref);
     const history = useHistory()
-
 
     const handleLogin = async (formFields : fields) => {
         try{
@@ -32,12 +32,12 @@ export const useLogin = (ref :  React.MutableRefObject<any>) => {
             })
 
             if(data.accepted){
-                console.log(data)
+               
                 history.push('/admin/dashboard')
                
               
             }else {    
-              openNotification("Verify your username and password")
+              openNotification("Verify your username and password" + data.msg)
             }
 
             console.log(data)

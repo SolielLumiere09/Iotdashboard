@@ -16,7 +16,7 @@ export const DisplayChartMqtt = ({deviceId, data, labels, property, title, topic
     const {currentData, currentDate, currentLabels, currentMeasure} = useDisplayChartMqtt(deviceId, labels, data, topicToSubscribe, property)
 
     return (
-        <div>
+        <>
              <DisplayChart
                 title={title} 
                 data={currentData}
@@ -25,6 +25,8 @@ export const DisplayChartMqtt = ({deviceId, data, labels, property, title, topic
                 measure={currentMeasure}
                 unit={unit}
             />
-        </div>
+        </>
     )
 }
+
+export type {Props}

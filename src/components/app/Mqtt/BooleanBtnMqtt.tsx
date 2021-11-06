@@ -23,3 +23,5 @@ export const BooleanBtnMqtt = ({deviceId, title, iconSize, iconName, publishTopi
         </>
     )
 }
+
+export type {Props}

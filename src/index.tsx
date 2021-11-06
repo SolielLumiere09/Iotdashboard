@@ -18,6 +18,7 @@ import { Register } from "layouts/app/Register";
 ReactDOM.render(
   <ThemeContextWrapper>
     <BackgroundColorWrapper>
+     
       <BrowserRouter>
         <Switch>
           <Route path="/admin" render={(props) => <AdminLayout />} />
