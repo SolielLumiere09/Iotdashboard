@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
@@ -14,18 +13,28 @@ import ThemeContextWrapper from "./components/core/ThemeWrapper/ThemeWrapper";
 import BackgroundColorWrapper from "./components/core/BackgroundColorWrapper/BackgroundColorWrapper";
 import { Login } from './layouts/app/Login';
 import { Register } from "layouts/app/Register";
+import { AuthContextProvider } from "contexts/app/AuthContext";
+import { MiddlewareValidator } from "components/app/MiddlewareValidator";
+import { NotificationContext } from "contexts/app/NotificationContext";
 
 ReactDOM.render(
   <ThemeContextWrapper>
     <BackgroundColorWrapper>
-     
       <BrowserRouter>
-        <Switch>
-          <Route path="/admin" render={(props) => <AdminLayout />} />
-          <Route path="/Login" render={(props) => <Login />} />
-          <Route path="/Register" render={(props) => <Register />} />
-          <Redirect from="/" to="/Login" />
-        </Switch>
+        <AuthContextProvider>
+          <NotificationContext>
+
+          <MiddlewareValidator/>
+            <Switch>
+              <Route path="/admin" render={() => <AdminLayout />} />
+              <Route path="/Login" render={() => <Login />} />
+              <Route path="/Register" render={() => <Register />} />
+              <Redirect from="/" to="/Login" />
+            </Switch>
+
+
+          </NotificationContext>
+        </AuthContextProvider>
       </BrowserRouter>
     </BackgroundColorWrapper>
   </ThemeContextWrapper>,

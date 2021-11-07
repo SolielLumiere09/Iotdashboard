@@ -55,7 +55,7 @@ type Size = {
 
 interface Attributes {
     userId : string
-    deviceId : string
+    widgetId : string
     type : TypeComponent
     size : Size
     props : props 
@@ -66,7 +66,7 @@ const schema = new Schema<Attributes>({
         required : true,
         type : String
     },
-    deviceId : {
+    widgetId : {
         required : true,
         type : String
     },

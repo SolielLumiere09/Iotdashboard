@@ -7,22 +7,37 @@ import React from 'react';
 
 
 interface Props {
-    deviceId : string
+    widgetId : string
     title : string 
     iconSize : string 
     iconName : string
     onClick : (status : boolean) => void
 }
 
-export const BooleanBtn = ({deviceId, title, iconSize, iconName, onClick} : Props) => {
-    const [colorSwitch, setColorSwitch] = useState(window.localStorage.getItem(deviceId) === "true")
-    const Icon = React.createElement(Icons[iconName])
+export const BooleanBtn = ({widgetId, title, iconSize, iconName, onClick} : Props) => {
+    const [colorSwitch, setColorSwitch] = useState(window.localStorage.getItem(widgetId) === "true")
+    
 
     const handleClick = () => {
         setColorSwitch(!colorSwitch)
         onClick(!colorSwitch)
 
-        window.localStorage.setItem(deviceId, ""+!colorSwitch);
+        window.localStorage.setItem(widgetId, ""+!colorSwitch);
+    }
+
+    const renderIcon = () => {
+        let icon = <></>
+
+        try{
+            if(Icons[iconName]){
+                icon = React.createElement(Icons[iconName])
+            }
+
+        }catch(e){
+
+        }
+
+        return icon
     }
 
     return (
@@ -36,7 +51,7 @@ export const BooleanBtn = ({deviceId, title, iconSize, iconName, onClick} : Prop
                                 size : iconSize,
                                 color : colorSwitch ? mappingColors[color] : ''
                             }}>
-                            {Icon}
+                            {renderIcon()}
 
                             </IconContext.Provider>
                             <Button color={classMappingColors[color]}  onClick={handleClick}>On/Off</Button>
@@ -47,3 +62,5 @@ export const BooleanBtn = ({deviceId, title, iconSize, iconName, onClick} : Prop
         </BackgroundColorContext.Consumer>
     )
 }
+
+export type {Props}

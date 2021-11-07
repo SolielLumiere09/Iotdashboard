@@ -3,9 +3,9 @@ import { useState, useMemo } from 'react';
 import mqtt from 'mqtt';
 import moment from 'moment';
 
-export const useDisplayMqtt = (deviceId : string, topicToSubscribe : string, property : string, dateKey : string) => {
+export const useDisplayMqtt = (widgetId : string, topicToSubscribe : string, property : string, dateKey : string) => {
     
-    const [currentMeasure, setCurrentMeasure] = useState(Number(window.localStorage.getItem(deviceId)))
+    const [currentMeasure, setCurrentMeasure] = useState(Number(window.localStorage.getItem(widgetId)))
     
     const client = useMemo(() => {
       
@@ -13,10 +13,10 @@ export const useDisplayMqtt = (deviceId : string, topicToSubscribe : string, pro
             mqtt.connect('http:/localhost', {
             port : 8083,
             protocol : 'ws',
-            clientId : deviceId,
+            clientId : widgetId,
             path: "/mqtt"
         }))
-    }, [deviceId])
+    }, [widgetId])
 
 
     useEffect(() => {
@@ -35,8 +35,8 @@ export const useDisplayMqtt = (deviceId : string, topicToSubscribe : string, pro
             console.log("message arrived");
             
             if(topic === topicToSubscribe && msg[property] !== undefined){
-                window.localStorage.setItem(deviceId, msg[property])
-                window.localStorage.setItem(deviceId + dateKey, moment().format('MMMM Do YYYY, h:mm:ss a'))
+                window.localStorage.setItem(widgetId, msg[property])
+                window.localStorage.setItem(widgetId + dateKey, moment().format('MMMM Do YYYY, h:mm:ss a'))
                 setCurrentMeasure(msg[property])
             } 
         })
@@ -48,11 +48,11 @@ export const useDisplayMqtt = (deviceId : string, topicToSubscribe : string, pro
             })
         }
         
-    }, [client, property, topicToSubscribe, deviceId, dateKey])  
+    }, [client, property, topicToSubscribe, widgetId, dateKey])  
     
     
     return {
         currentMeasure,
-        lastArrive : window.localStorage.getItem(deviceId + dateKey)
+        lastArrive : window.localStorage.getItem(widgetId + dateKey)
     }
 }

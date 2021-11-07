@@ -1,4 +1,4 @@
-import { Card, CardBody, Row, Col, FormGroup, Label, Input } from 'reactstrap';
+import { Card, CardBody, FormGroup, Label, Input } from 'reactstrap';
 import { useState } from 'react';
 import { BooleanBtnForm } from 'components/app/Forms/BooleanBtnForm';
 
@@ -32,32 +32,29 @@ export const Widgets = () => {
     return (
         <>
             <div className='content'>
-                <Row>
-                    <Col lg={6}>
-                        <Card >
-                            <CardBody>
+             
+                <Card >
+                    <CardBody>
+                    
+                        <FormGroup className='row col col-6'>
+                            <Label for="exampleSelect1">Widget</Label>
+                            <Input type="select" name="select" id="exampleSelect1" onChange={(event) => {setOption(map[event.target.value])}}>
+                                <option onClick={() => setOption(0)}>BooleanButton</option>
+                                <option onClick={() => setOption(1)}>Display</option>
+                                <option onClick={() => setOption(2)}>DisplayChart</option>
+                                <option onClick={() => setOption(3)}>MapDevice</option>
+                            </Input>
+                        </FormGroup>
+                        
+                        {
+                            renderOption()
+                        }
+                    
+                        
+                
+                    </CardBody>
+                </Card>
 
-                            <FormGroup>
-                                <Label for="exampleSelect1">Widget</Label>
-                                <Input type="select" name="select" id="exampleSelect1" onChange={(event) => {setOption(map[event.target.value])}}>
-                                    <option onClick={() => setOption(0)}>BooleanButton</option>
-                                    <option onClick={() => setOption(1)}>Display</option>
-                                    <option onClick={() => setOption(2)}>DisplayChart</option>
-                                    <option onClick={() => setOption(3)}>MapDevice</option>
-                                </Input>
-                                </FormGroup>
-
-                                {
-                                    renderOption()
-                                }
-                               
-                            
-
-                            </CardBody>
-                        </Card>
-
-                    </Col>
-                </Row>
 
             </div>
 

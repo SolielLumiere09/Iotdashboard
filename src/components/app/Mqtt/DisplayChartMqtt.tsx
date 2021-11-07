@@ -3,7 +3,7 @@ import { useDisplayChartMqtt } from '../../../hooks/useDisplayChartMqtt';
 
 
 interface Props {
-    deviceId : string
+    widgetId : string
     title : string,
     unit : string, 
     labels : Array<String>
@@ -12,8 +12,8 @@ interface Props {
     property : string
 }
 
-export const DisplayChartMqtt = ({deviceId, data, labels, property, title, topicToSubscribe, unit} : Props) => {
-    const {currentData, currentDate, currentLabels, currentMeasure} = useDisplayChartMqtt(deviceId, labels, data, topicToSubscribe, property)
+export const DisplayChartMqtt = ({widgetId, data, labels, property, title, topicToSubscribe, unit} : Props) => {
+    const {currentData, currentDate, currentLabels, currentMeasure} = useDisplayChartMqtt(widgetId, labels, data, topicToSubscribe, property)
 
     return (
         <>

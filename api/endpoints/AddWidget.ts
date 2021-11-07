@@ -11,16 +11,16 @@ addWidgetEnpoint.post<any, any, any, Attributes, any>('/api/addWidget', async (r
     }
     
     try {
-        const {props, size, type, userId, deviceId} = req.body
+        const {props, size, type, userId, widgetId} = req.body
         
         
         if(props !== null && size !== null && type !== null && userId !== null){
 
-            if(! await Widget.exists({ deviceId })){
+            if(! await Widget.exists({ widgetId })){
 
                 const newWidget = new Widget({
                     userId : userId,
-                    deviceId : props.deviceId,
+                    widgetId,
                     type,
                     size,
                     props
@@ -33,12 +33,12 @@ addWidgetEnpoint.post<any, any, any, Attributes, any>('/api/addWidget', async (r
                     response.msg = "There was an error saving the device"
                 }
                 else {
-                    response.msg = "Register device sucessfull"
+                    response.msg = "Register widget sucessfull"
                     response.accepted = true
                 }
 
             }else {
-                response.msg = "Device already Exists"
+                response.msg = "WidgetId already Exists"
             }
 
         }
@@ -51,7 +51,7 @@ addWidgetEnpoint.post<any, any, any, Attributes, any>('/api/addWidget', async (r
     } catch (error) {
         console.log("error");
         
-        response.msg = error
+        response.msg = "Server error"
     }
 
 

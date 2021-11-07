@@ -4,7 +4,7 @@ import { useDisplayMqtt } from '../../../hooks/useDisplayMqtt';
 
 
 interface Props {
-    deviceId : string
+    widgetId : string
     title : string
     unit : string
     topicToSubscribe : string 
@@ -12,8 +12,8 @@ interface Props {
 }
 
 
-export const DisplayMqtt = ({deviceId, property, title, topicToSubscribe, unit} : Props) => {
-    const {currentMeasure, lastArrive} = useDisplayMqtt(deviceId, topicToSubscribe, property, title)
+export const DisplayMqtt = ({widgetId, property, title, topicToSubscribe, unit} : Props) => {
+    const {currentMeasure, lastArrive} = useDisplayMqtt(widgetId, topicToSubscribe, property, title)
 
     return (
         <>

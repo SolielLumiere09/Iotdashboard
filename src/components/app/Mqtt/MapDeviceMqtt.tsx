@@ -3,7 +3,7 @@ import { useMapDeviceMqtt } from '../../../hooks/useMapDeviceMqtt';
 
 
 interface Props {
-    deviceId : string
+    widgetId : string
     title : string 
     height : number
     popupMesage : string
@@ -12,8 +12,8 @@ interface Props {
 
 }
 
-export const MapDeviceMqtt = ({deviceId, height, popupMesage, property, title, topicToSubscribe} : Props) => {
-    const {position} = useMapDeviceMqtt(deviceId, topicToSubscribe, property)
+export const MapDeviceMqtt = ({widgetId, height, popupMesage, property, title, topicToSubscribe} : Props) => {
+    const {position} = useMapDeviceMqtt(widgetId, topicToSubscribe, property)
 
     return (
         <>

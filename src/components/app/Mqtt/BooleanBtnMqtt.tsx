@@ -2,7 +2,7 @@ import { BooleanBtn } from '../BooleanBtn'
 import { useBooleanBtnMqtt } from '../../../hooks/useBooleanBtnMqtt';
 
 interface Props {
-    deviceId : string
+    widgetId : string
     title : string 
     iconSize : string 
     iconName : string
@@ -12,12 +12,12 @@ interface Props {
 
 
 
-export const BooleanBtnMqtt = ({deviceId, title, iconSize, iconName, publishTopic, propertyName} : Props) => {
-    const {publishPayload} = useBooleanBtnMqtt(deviceId, publishTopic, propertyName)
+export const BooleanBtnMqtt = ({widgetId, title, iconSize, iconName, publishTopic, propertyName} : Props) => {
+    const {publishPayload} = useBooleanBtnMqtt(widgetId, publishTopic, propertyName)
 
     return (
         <>
-            <BooleanBtn deviceId={deviceId} title={title} iconSize={iconSize} iconName={iconName} onClick={(status) => {
+            <BooleanBtn widgetId={widgetId} title={title} iconSize={iconSize} iconName={iconName} onClick={(status) => {
                 publishPayload(status)
             }}/>  
         </>

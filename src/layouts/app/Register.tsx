@@ -1,31 +1,12 @@
-import React from 'react'
 import background from 'assets/img/card-info.png'
 import { Card, CardBody, CardText, Button } from 'reactstrap';
 import { useHistory } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import axios from 'axios';
-import Notify from 'react-notification-alert';
-import { useRef } from 'react';
-import { useNotification } from '../../hooks/useNotification';
-
-interface Response {
-    msg : string,
-    accepted : boolean
-}
-
-interface fields {
-    userName : string 
-    password : string
-}
-
+import { useRegister } from '../../hooks/useRegister';
 
 
 export const Register = () => {
     const history = useHistory()
-    const { register, handleSubmit } = useForm<fields>();
-    const notification = useRef(null)
-    const {openNotification} = useNotification(notification)
-
+    const {handleRegister, handleSubmit, register} = useRegister()
 
     const style : React.CSSProperties = {
         position : 'absolute',
@@ -34,31 +15,6 @@ export const Register = () => {
         transform : 'translate(-50%,-50%)',
         backgroundImage : `url(${background})`,
         backgroundRepeat : 'no-repeat'
-    }
-
-
-    const handleRegister = async (formData : fields) => {
-        
-        try{
-            const {password, userName} = formData
-        
-            const {data} = await axios.post<Response>('http://localhost:3001/userRegister', {
-                userName,
-                password
-            })
-
-            if(data.accepted){
-                openNotification(data.msg)
-            }
-            else {
-                openNotification(data.msg)
-            }
-
-
-        }catch(e){
-            openNotification("Can't connect to the server")
-        }
-     
     }
 
 
@@ -80,7 +36,6 @@ export const Register = () => {
     
                 </CardBody>
             </Card>
-            <Notify ref={notification}/>
-    </>
+        </>
     )
 }

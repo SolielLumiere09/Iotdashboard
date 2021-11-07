@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import mqtt from 'mqtt'
 import moment from 'moment';
 
-export const useDisplayChartMqtt = (deviceId : string, labels : Array<String>,  data : Array<number>, topicToSubscribe : string,  property : string) => {
+export const useDisplayChartMqtt = (widgetId : string, labels : Array<String>,  data : Array<number>, topicToSubscribe : string,  property : string) => {
     
     const [currentMeasure, setCurrentMeasure] = useState(0)
     const [currentLabels, setCurrentLabels] = useState(labels)
@@ -14,17 +14,17 @@ export const useDisplayChartMqtt = (deviceId : string, labels : Array<String>,  
         return mqtt.connect("http:/localhost", {
             port : 8083,
             protocol : 'ws',
-            clientId : deviceId,
+            clientId : widgetId,
             path : '/mqtt'
         })
-    }, [deviceId])
+    }, [widgetId])
 
     useEffect(() => {
         try{
-            const saveLabels = window.localStorage.getItem(deviceId+'labels').split(',')
-            const saveData = window.localStorage.getItem(deviceId+'data').split(',')
-            const saveValue = Number(window.localStorage.getItem(deviceId+'currentValue'))
-            const savedDate = window.localStorage.getItem(deviceId+'date')
+            const saveLabels = window.localStorage.getItem(widgetId+'labels').split(',')
+            const saveData = window.localStorage.getItem(widgetId+'data').split(',')
+            const saveValue = Number(window.localStorage.getItem(widgetId+'currentValue'))
+            const savedDate = window.localStorage.getItem(widgetId+'date')
 
             if(saveLabels.length > 0)
                 setCurrentLabels(saveLabels)
@@ -44,7 +44,7 @@ export const useDisplayChartMqtt = (deviceId : string, labels : Array<String>,  
         return () => {
             
         }
-    }, [deviceId])
+    }, [widgetId])
 
     useEffect(() => {
         
@@ -65,8 +65,8 @@ export const useDisplayChartMqtt = (deviceId : string, labels : Array<String>,  
                     array.push(date)
                     setCurrentDate(date)
                     
-                    window.localStorage.setItem(deviceId+'labels', array.join())
-                    window.localStorage.setItem(deviceId+'date', date)
+                    window.localStorage.setItem(widgetId+'labels', array.join())
+                    window.localStorage.setItem(widgetId+'date', date)
                 
 
                     return array
@@ -79,8 +79,8 @@ export const useDisplayChartMqtt = (deviceId : string, labels : Array<String>,  
                     
                     array.push(msg[property])
                     setCurrentMeasure(msg[property])
-                    window.localStorage.setItem(deviceId+'data', array.toString())
-                    window.localStorage.setItem(deviceId+'currentValue', msg[property])
+                    window.localStorage.setItem(widgetId+'data', array.toString())
+                    window.localStorage.setItem(widgetId+'currentValue', msg[property])
                     
                     return array
                 })
@@ -94,7 +94,7 @@ export const useDisplayChartMqtt = (deviceId : string, labels : Array<String>,  
                 
             })
         }
-    }, [client, property, topicToSubscribe, deviceId])
+    }, [client, property, topicToSubscribe, widgetId])
     
     
     return {

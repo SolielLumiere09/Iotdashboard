@@ -10,7 +10,8 @@ userLoginEndpoint.get<any, any, any, any, Attributes>('/loginUser', async (req, 
     const response = {
         msg : '',
         accepted : false,
-        token : ''
+        token : '',
+        userId : ''
     }
     const {userName, password} = req.query
 
@@ -34,6 +35,7 @@ userLoginEndpoint.get<any, any, any, any, Attributes>('/loginUser', async (req, 
             
             response.accepted = true;
             response.token = token
+            response.userId = user.id
         }
 
 

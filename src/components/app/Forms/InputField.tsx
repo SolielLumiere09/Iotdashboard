@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Label, Input, FormGroup } from 'reactstrap';
+import { Col, Label, FormGroup } from 'reactstrap';
 import { InputType } from 'reactstrap/lib/Input';
 
 interface Props {
@@ -13,14 +13,18 @@ interface Props {
     label : string,
     type : InputType
     placeholder : string    
+    register? : any
 }
 
-export const InputField = ({label, placeholder, size, type} : Props) => {
+export const InputField = ({label, placeholder, size, type, register} : Props) => {
     return (
         <Col {...size}>
             <Label className='control-label'>{label}</Label>
             <FormGroup>
-                <Input
+                <input
+                    
+                    className='form-control from-text'
+                    {...register}
                     type={type}
                     placeholder={placeholder}
                 />    

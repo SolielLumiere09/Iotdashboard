@@ -1,22 +1,50 @@
-import { createContext } from "react";
+import { createContext, useState } from 'react';
 
 
-interface AuthState {
+interface AuthContextState {
+    isLoged : boolean
     token? : string
-    name? : string
-    id? : string
-    isAuth? : boolean
-}
-
-const authSate : AuthState= {
-    isAuth : false
+    userId? : string
 }
 
 
+interface AuthContextProps {
+    authContextState : AuthContextState,
+    setState : (state : AuthContextState) => void
+}
 
 
-const AuthContext = createContext<AuthState>(authSate)
+const AuthContextInitialState : AuthContextState = {
+    isLoged : false,
+    userId : undefined,
+    token : undefined 
+}
 
+
+
+const AuthContext = createContext<AuthContextProps>({} as AuthContextProps)
+
+
+
+export const AuthContextProvider = ({children}) => {
+
+    const [AuthProps, setAuthProps] = useState<AuthContextState>(AuthContextInitialState)
+
+    const setState = (state : AuthContextState) => {
+        setAuthProps(state)
+    }
+
+    return (
+        <AuthContext.Provider value={{
+            authContextState : AuthProps,
+            setState
+        }}>
+            {children}
+        </AuthContext.Provider>
+      
+    )
+}
 
 
 export {AuthContext}
+export type {AuthContextState}

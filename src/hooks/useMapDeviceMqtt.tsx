@@ -4,7 +4,7 @@ import mqtt from 'mqtt'
 
 
 
-export const useMapDeviceMqtt = (deviceId : string, topicToSubscribe : string, property : string) => {
+export const useMapDeviceMqtt = (widgetId : string, topicToSubscribe : string, property : string) => {
     const [position, setPosition] = useState<LatLngTuple>([0, 0])
     
     const client = useMemo(() => {
@@ -12,11 +12,11 @@ export const useMapDeviceMqtt = (deviceId : string, topicToSubscribe : string, p
             mqtt.connect("http:/localhost", {
                 port : 8083,
                 protocol : 'ws',
-                clientId : deviceId,
+                clientId : widgetId,
                 path : '/mqtt'
             })
         )
-    }, [deviceId])
+    }, [widgetId])
 
 
     useEffect(() => {
