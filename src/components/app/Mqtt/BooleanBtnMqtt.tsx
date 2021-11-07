@@ -20,6 +20,7 @@ export const BooleanBtnMqtt = ({widgetId, title, iconSize, iconName, publishTopi
             <BooleanBtn widgetId={widgetId} title={title} iconSize={iconSize} iconName={iconName} onClick={(status) => {
                 publishPayload(status)
             }}/>  
+          
         </>
     )
 }

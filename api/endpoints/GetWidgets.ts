@@ -34,7 +34,7 @@ getWidgetsEndpoint.get<any, any, any, any, Req>('/api/getWidgets', async (req, r
             response.accepted = true,
             response.msg = 'success'
             response.widgets = items
-            console.log(items);
+           
         }else {
             response.msg = 'undefined userId'
         }

@@ -9,26 +9,27 @@ export const MiddlewareValidator = ({children} : any) => {
     const history = useHistory()
 
     useEffect(() => {
-
-        try {
-            const state = JSON.parse(window.localStorage.getItem(APP_LOGIN_STATUS)) as AuthContextState
-
-            if(state.isLoged === false){
-            
-                console.log("app state ---> ", authContext.authContextState);
-                window.localStorage.setItem(APP_LOGIN_STATUS, JSON.stringify(authContext.authContextState));
+        if(!authContext.authContextState.isLoged){
+            try {
+                const state = JSON.parse(window.localStorage.getItem(APP_LOGIN_STATUS)) as AuthContextState
     
+                if(state.isLoged === false){
+                
+    
+                    window.localStorage.setItem(APP_LOGIN_STATUS, JSON.stringify(authContext.authContextState));
+        
+                    history.push('/Login')    
+                }else {
+                    authContext.setState(state)
+                    history.push('/admin/dashboard')
+                }
+    
+            } catch (error) {
+            
                 history.push('/Login')    
-            }else {
-                history.push('/admin/dashboard')
+                
             }
-
-        } catch (error) {
-            console.log('catching exceptions :)');
-            history.push('/Login')    
-            
         }
-    
     }, [authContext, history])
     
     return (

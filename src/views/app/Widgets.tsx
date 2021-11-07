@@ -1,6 +1,7 @@
 import { Card, CardBody, FormGroup, Label, Input } from 'reactstrap';
 import { useState } from 'react';
 import { BooleanBtnForm } from 'components/app/Forms/BooleanBtnForm';
+import { DisplayForm } from 'components/app/Forms/DisplayForm';
 
 
 export const Widgets = () => {  
@@ -22,6 +23,8 @@ export const Widgets = () => {
         switch(option){
             case 0 : 
                 component =  <BooleanBtnForm />
+                break
+            case 1: component = <DisplayForm/>
                 break
         }
 

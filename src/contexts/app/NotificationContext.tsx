@@ -2,7 +2,7 @@ import { useMemo, useRef, useCallback, createContext } from 'react';
 import Notify from 'react-notification-alert';
 
 interface NotificationContextProps {
-    openNotification : (message : string) => void
+    openNotification : (message : string, color? : string) => void
 }
 
 const NotificationContextProvider = createContext<NotificationContextProps>({} as NotificationContextProps)
@@ -10,11 +10,13 @@ const NotificationContextProvider = createContext<NotificationContextProps>({} a
 
 export const NotificationContext = ({children}) => {
     const ref = useRef(null)
+   
+
     const options = useMemo(() => {
         return {
             place : 'tc',
             message : '',
-            type : 'danger',
+            type : 'warning',
             icon : 'tim-icons icon-bell-55',
             autoDismiss : 5,
             closeButton : true
@@ -22,22 +24,25 @@ export const NotificationContext = ({children}) => {
     }, [])
 
 
-    const openNotification = useCallback((message : string) => {
+    const openNotification = useCallback((message : string, color? : string ) => {
         if(ref.current !== null)
             ref.current.notificationAlert({
                 ...options,
-                message
+                message,
+                type : color !== undefined ? color : 'danger'
             })
      }, [options, ref])
 
 
     return (
+       
         <NotificationContextProvider.Provider value={{
             openNotification
         }}>
             {children}
             <Notify ref={ref}/>
         </NotificationContextProvider.Provider>
+     
     )
 }
 

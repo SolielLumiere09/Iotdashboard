@@ -1,9 +1,8 @@
 import { useMemo, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from 'contexts/app/AuthContext';
-import axios from 'axios';
 import { Props as BooleanBtnProps } from '../components/app/BooleanBtn';
-import { Response, WidgetDBprops } from 'contexts/app/Generalvariables';
+import { Response, WidgetDBprops, axiosInstance } from 'contexts/app/Generalvariables';
 import { NotificationContextProvider } from 'contexts/app/NotificationContext';
 
 
@@ -103,17 +102,19 @@ export const useBooleanBtnForm = () => {
                 
             }
             
-            const {data} = await axios.post<Response>("http://localhost:3001/api/addWidget", widgetPropertyToSend)
+            const {data} = await axiosInstance.post<Response>("/api/addWidget", widgetPropertyToSend)
 
 
             if(data.accepted){
                 
-                openNotification("device Registered successfull --> " + data.msg)
+                openNotification("device Registered successfull --> " + data.msg, 'success')
             }else {
-                openNotification("can't register device --> " + JSON.stringify(data.msg))
+                openNotification("can't register device --> " + JSON.stringify(data.msg), 'warning')
+            
             }
 
         }catch(e){
+            openNotification("Server error", 'danger')
             console.log("error", e);
             
         }

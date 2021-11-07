@@ -30,3 +30,5 @@ export const Display = ({title, measure, unit, date} : Props) => {
 
     )
 }
+
+export type {Props as DisplayProps}
