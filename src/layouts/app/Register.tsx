@@ -1,7 +1,7 @@
 import background from 'assets/img/card-info.png'
 import { Card, CardBody, CardText, Button } from 'reactstrap';
 import { useHistory } from 'react-router-dom';
-import { useRegister } from '../../hooks/useRegister';
+import { useRegister } from '../../hooks/views/useRegister';
 
 
 export const Register = () => {

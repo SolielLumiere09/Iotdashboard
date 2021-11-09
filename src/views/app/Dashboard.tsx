@@ -1,6 +1,6 @@
 import { Widget as WidgetComponent } from 'components/app/Widget';
 import { Row } from 'reactstrap';
-import { useDashboard } from '../../hooks/useDashboard';
+import { useDashboard } from '../../hooks/views/useDashboard';
 
 
 export const Dashboard = () => {

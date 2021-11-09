@@ -1,7 +1,7 @@
 import { useMemo, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from 'contexts/app/AuthContext';
-import { Props as BooleanBtnProps } from '../components/app/BooleanBtn';
+import { Props as BooleanBtnProps } from '../../components/app/BooleanBtn';
 import { Response, WidgetDBprops, axiosInstance } from 'contexts/app/Generalvariables';
 import { NotificationContextProvider } from 'contexts/app/NotificationContext';
 

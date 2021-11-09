@@ -1,6 +1,6 @@
 
 import { Display } from '../Display';
-import { useDisplayMqtt } from '../../../hooks/useDisplayMqtt';
+import { useDisplayMqtt } from '../../../hooks/mqtt/useDisplayMqtt';
 
 
 interface Props {

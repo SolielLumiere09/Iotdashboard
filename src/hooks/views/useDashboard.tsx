@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext } from 'react';
 import { axiosInstance } from 'contexts/app/Generalvariables';
 import { AuthContext } from 'contexts/app/AuthContext';
-import { Props as BooleanBtnProps } from '../components/app/Mqtt/BooleanBtnMqtt';
-import { Props as DisplayMqttProps } from '../components/app/Mqtt/DisplayMqtt';
-import { Props as DsiplayChartProps } from '../components/app/Mqtt/DisplayChartMqtt';
+import { Props as BooleanBtnProps } from '../../components/app/Mqtt/BooleanBtnMqtt';
+import { Props as DisplayMqttProps } from '../../components/app/Mqtt/DisplayMqtt';
+import { Props as DsiplayChartProps } from '../../components/app/Mqtt/DisplayChartMqtt';
 import { Props as MapDeviceProps } from 'components/app/Mqtt/MapDeviceMqtt';
 
 

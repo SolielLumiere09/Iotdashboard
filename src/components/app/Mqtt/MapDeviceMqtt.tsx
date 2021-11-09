@@ -1,5 +1,5 @@
 import { MapDevice } from '../MapDevice'
-import { useMapDeviceMqtt } from '../../../hooks/useMapDeviceMqtt';
+import { useMapDeviceMqtt } from '../../../hooks/mqtt/useMapDeviceMqtt';
 
 
 interface Props {

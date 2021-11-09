@@ -1,6 +1,6 @@
 import { Button, Card, CardBody, CardText } from 'reactstrap'
 import background from 'assets/img/card-primary.png'
-import { useLogin } from '../../hooks/useLogin';
+import { useLogin } from '../../hooks/views/useLogin';
 import { useHistory } from 'react-router-dom';
 
 export const Login = () => {

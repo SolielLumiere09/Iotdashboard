@@ -1,5 +1,5 @@
 import { BooleanBtn } from '../BooleanBtn'
-import { useBooleanBtnMqtt } from '../../../hooks/useBooleanBtnMqtt';
+import { useBooleanBtnMqtt } from '../../../hooks/mqtt/useBooleanBtnMqtt';
 
 interface Props {
     widgetId : string

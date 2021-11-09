@@ -1,5 +1,5 @@
 import { DisplayChart } from '../DisplayChart';
-import { useDisplayChartMqtt } from '../../../hooks/useDisplayChartMqtt';
+import { useDisplayChartMqtt } from '../../../hooks/mqtt/useDisplayChartMqtt';
 
 
 interface Props {

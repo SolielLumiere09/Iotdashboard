@@ -1,7 +1,7 @@
 import { Row, Col, Button } from 'reactstrap';
 import { InputField } from './InputField';
 import { BooleanBtn } from '../BooleanBtn';
-import { useBooleanBtnForm } from '../../../hooks/useBooleanBtnForm';
+import { useBooleanBtnForm } from '../../../hooks/forms/useBooleanBtnForm';
 import { BackgroundColorContext, classMappingColors } from 'contexts/core/BackgroundColorContext';
 
 
@@ -114,7 +114,7 @@ export const BooleanBtnForm = () => {
                 </Row>
             
             </Col>
-            <Col lg={4} className={'mt-5 offset-lg-1'}>
+            <Col lg={4} className={'offset-lg-1'}>
 
                <BooleanBtn
                   {...btnState}

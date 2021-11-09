@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useEffect } from 'react'
 import mqtt from 'mqtt'
+import { mqttConfiguration } from 'contexts/app/Generalvariables';
 
 export const useBooleanBtnMqtt = (widgetId : string, publishTopic : string, propertyName : string) => {
 
@@ -8,10 +9,8 @@ export const useBooleanBtnMqtt = (widgetId : string, publishTopic : string, prop
     const client = useMemo(() => {
         return (
             mqtt.connect("http:/localhost", {
-                port : 8083,
-                protocol : 'ws',
+                ...mqttConfiguration,
                 clientId : widgetId,
-                path : '/mqtt'
             })
         )
     }, [widgetId])
