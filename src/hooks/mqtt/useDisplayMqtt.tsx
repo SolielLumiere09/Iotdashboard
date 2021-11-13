@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useState, useMemo } from 'react';
 import mqtt from 'mqtt';
 import moment from 'moment';
+import { mqttConfiguration, MQTT_SERVER } from 'contexts/app/Generalvariables';
 
 export const useDisplayMqtt = (widgetId : string, topicToSubscribe : string, property : string, dateKey : string) => {
     
@@ -10,11 +11,10 @@ export const useDisplayMqtt = (widgetId : string, topicToSubscribe : string, pro
     const client = useMemo(() => {
       
         return(
-            mqtt.connect('http:/localhost', {
-            port : 8083,
-            protocol : 'ws',
-            clientId : widgetId,
-            path: "/mqtt"
+            mqtt.connect(MQTT_SERVER, {
+            ...mqttConfiguration,
+            clientId : widgetId + Math.random() * 0xFFFF,
+            
         }))
     }, [widgetId])
 
@@ -26,7 +26,7 @@ export const useDisplayMqtt = (widgetId : string, topicToSubscribe : string, pro
         })
 
         client.subscribe(topicToSubscribe, () => {
-            console.log("subscribed to " + topicToSubscribe);
+           // console.log("subscribed to " + topicToSubscribe);
             
         })
 

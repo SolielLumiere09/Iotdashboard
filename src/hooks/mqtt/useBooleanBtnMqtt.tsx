@@ -1,25 +1,32 @@
 import { useMemo } from 'react';
 import { useEffect } from 'react'
 import mqtt from 'mqtt'
-import { mqttConfiguration } from 'contexts/app/Generalvariables';
+import { mqttConfiguration, MQTT_SERVER } from 'contexts/app/Generalvariables';
 
-export const useBooleanBtnMqtt = (widgetId : string, publishTopic : string, propertyName : string) => {
+export const useBooleanBtnMqtt = (widgetId : string, publishTopic : string, payloadWhenOff : string, payloadWhenOn : string) => {
 
 
     const client = useMemo(() => {
         return (
-            mqtt.connect("http:/localhost", {
+            mqtt.connect(MQTT_SERVER, {
                 ...mqttConfiguration,
-                clientId : widgetId,
+                clientId : widgetId + Math.random() * 0xFFFF,
             })
         )
     }, [widgetId])
 
 
     const publishPayload = (status : boolean) => {
-        client.publish(publishTopic, JSON.stringify({
-            [propertyName] : status
-        }), {retain : true})
+        if(!status){
+            client.publish(publishTopic, payloadWhenOn, {retain : true})
+          
+            
+        }else {
+            client.publish(publishTopic, payloadWhenOff, {retain : true})
+
+            
+        }
+        
     }
 
     useEffect(() => {
@@ -28,12 +35,14 @@ export const useBooleanBtnMqtt = (widgetId : string, publishTopic : string, prop
             console.log("connected")
         })
 
+        
+
         return ()=> {
             client.end(true, () => {
                 console.log('disconected'); 
             })
         }
-    }, [client])  
+    }, [client, publishTopic])  
     
     
     

@@ -16,8 +16,8 @@ export const Dashboard = () => {
                         widgets.map(widget => {
                             return (
                                 <WidgetComponent
+                                    key={widget.widgetId}
                                     props={widget.props}
-                                    size={widget.size}
                                     type={widget.type}
                                 />
                             )

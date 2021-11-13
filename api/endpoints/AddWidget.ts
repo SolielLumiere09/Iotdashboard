@@ -11,10 +11,10 @@ addWidgetEnpoint.post<any, any, any, Attributes, any>('/api/addWidget', async (r
     }
     
     try {
-        const {props, size, type, userId, widgetId} = req.body
+        const {props, type, userId, widgetId} = req.body
         
         
-        if(props !== null && size !== null && type !== null && userId !== null){
+        if(props !== null && type !== null && userId !== null){
 
             if(! await Widget.exists({ widgetId })){
 
@@ -22,7 +22,6 @@ addWidgetEnpoint.post<any, any, any, Attributes, any>('/api/addWidget', async (r
                     userId : userId,
                     widgetId,
                     type,
-                    size,
                     props
                 })
 

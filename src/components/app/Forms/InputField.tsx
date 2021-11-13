@@ -22,7 +22,6 @@ export const InputField = ({label, placeholder, size, type, register} : Props) =
             <Label className='control-label'>{label}</Label>
             <FormGroup>
                 <input
-                    
                     className='form-control from-text'
                     {...register}
                     type={type}

@@ -12,12 +12,8 @@ interface Fields {
     iconSize : string 
     IconName : string
     Topic : string
-    Property : string
-    xs : number
-    sm : number
-    md : number
-    lg : number
-    xl : number
+    payloadWhenOff : string
+    payloadWhenOn : string
 }
 
 
@@ -63,17 +59,6 @@ export const useBooleanBtnForm = () => {
         }
     }, [])
 
-    const sizeProperties = useMemo(() => {
-        return {
-            xs : 4,
-            sm : 3,
-            md : 3,
-            lg : 3,
-            xl : 3,
-            
-        }
-    }, [])
-
 
     const clickHandler = async (formData : Fields) => {
         console.log(authContextState);
@@ -84,20 +69,14 @@ export const useBooleanBtnForm = () => {
                 userId : authContextState.userId,
                 widgetId : formData.widgetId,
                 type : 'BooleanBtnMqtt',
-                size : {
-                    xs : formData.xs,
-                    sm : formData.sm,
-                    md : formData.md,
-                    lg : formData.lg,
-                    xl : formData.xl
-                },
                 props : {
                     widgetId : formData.widgetId,
                     title : formData.title ,
                     iconSize : formData.iconSize, 
                     iconName : formData.IconName,
                     publishTopic : formData.Topic,
-                    propertyName : formData.Property
+                    payloadWhenOn : formData.payloadWhenOn,
+                    payloadWhenOff : formData.payloadWhenOff
                 }
                 
             }
@@ -114,7 +93,7 @@ export const useBooleanBtnForm = () => {
             }
 
         }catch(e){
-            openNotification("Server error", 'danger')
+            openNotification("Please fill correctly the fileds", 'danger')
             console.log("error", e);
             
         }
@@ -130,7 +109,6 @@ export const useBooleanBtnForm = () => {
         register,
         btnState,
         clickHandler,
-        size,
-        sizeProperties
+        size
     }
 }

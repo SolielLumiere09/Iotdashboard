@@ -6,7 +6,8 @@ interface BooleanBtnMqtt {
     iconSize : string 
     iconName : string
     publishTopic : string
-    propertyName : string
+    payloadWhenOff : string
+    payloadWhenOn : string
 }
 
 interface DisplayChartMqtt {
@@ -45,19 +46,10 @@ type TypeComponent =
 
 type props = BooleanBtnMqtt | DisplayChartMqtt | DisplayMqtt | MapDeviceMqtt
 
-type Size = {
-    xs : number
-    sm : number 
-    md : number 
-    lg : number 
-    xl : number
-}
-
 interface Attributes {
     userId : string
     widgetId : string
     type : TypeComponent
-    size : Size
     props : props 
 }
 
@@ -73,10 +65,6 @@ const schema = new Schema<Attributes>({
     type : {
         required : true,
         type : String
-    },
-    size : {
-        required : true,
-        type : Schema.Types.Mixed
     },
     props : {
         required : true,

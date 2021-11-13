@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { LatLngTuple } from 'leaflet';
 import mqtt from 'mqtt'
+import { mqttConfiguration, MQTT_SERVER } from 'contexts/app/Generalvariables';
 
 
 
@@ -9,11 +10,9 @@ export const useMapDeviceMqtt = (widgetId : string, topicToSubscribe : string, p
     
     const client = useMemo(() => {
         return (
-            mqtt.connect("http:/localhost", {
-                port : 8083,
-                protocol : 'ws',
-                clientId : widgetId,
-                path : '/mqtt'
+            mqtt.connect(MQTT_SERVER, {
+                ...mqttConfiguration,
+                clientId : widgetId + Math.random() * 0xFFFF,
             })
         )
     }, [widgetId])

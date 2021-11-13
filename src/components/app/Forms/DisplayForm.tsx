@@ -6,10 +6,9 @@ import { useDisplayForm } from '../../../hooks/forms/useDisplayForm';
 
 
 
-
 export const DisplayForm = () => {
 
-    const {register, size, sizeProperties, formState, handleSubmit, clickHandler} = useDisplayForm()
+    const {register, size, formState, handleSubmit, clickHandler} = useDisplayForm()
 
 
     return (
@@ -54,43 +53,8 @@ export const DisplayForm = () => {
                         /> 
                         
                         <Col xs={12}/>
-
-                        <InputField
-                            size={sizeProperties}
-                            label={'X-Small'}
-                            placeholder="xs"
-                            type='number'
-                            register={register('xs')}
-                        />
-                        <InputField
-                            size={sizeProperties}
-                            label={'small'}
-                            placeholder="sm"
-                            type='number'
-                            register={register('sm')}
-                        />
-                        <InputField
-                            size={sizeProperties}
-                            label={'medium'}
-                            placeholder="md"
-                            type='number'
-                            register={register('md')}
-                        />
-                        <InputField
-                            size={sizeProperties}
-                            label={'large'}
-                            placeholder="lg"
-                            type='number'
-                            register={register('lg')}
-                        />
-                        <InputField
-                            size={sizeProperties}
-                            label={'x-large'}
-                            placeholder="xl"
-                            type='number'
-                            register={register('xl')}
-                        />
-
+                                
+        
 
                         <BackgroundColorContext.Consumer>
                             {({color}) => (

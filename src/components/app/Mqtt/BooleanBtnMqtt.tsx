@@ -7,13 +7,14 @@ interface Props {
     iconSize : string 
     iconName : string
     publishTopic : string
-    propertyName : string
+    payloadWhenOff : string
+    payloadWhenOn : string
 }
 
 
 
-export const BooleanBtnMqtt = ({widgetId, title, iconSize, iconName, publishTopic, propertyName} : Props) => {
-    const {publishPayload} = useBooleanBtnMqtt(widgetId, publishTopic, propertyName)
+export const BooleanBtnMqtt = ({widgetId, title, iconSize, iconName, publishTopic, payloadWhenOn, payloadWhenOff} : Props) => {
+    const {publishPayload} = useBooleanBtnMqtt(widgetId, publishTopic, payloadWhenOn, payloadWhenOff)
 
     return (
         <>

@@ -17,7 +17,6 @@ export interface Widget {
     userId:   string;
     widgetId: string;
     type:     TypeComponent;
-    size:     Size;
     props:    ComponentProps;
 }
 
@@ -28,18 +27,11 @@ type TypeComponent =
     | 'DisplayChartMqtt'
     | 'MapDeviceMqtt' 
 
-export interface Size {
-    xs: number;
-    sm: number;
-    md: number;
-    lg: number;
-    xl: number;
-}
 
 export const useDashboard = () => {
     const [widgets, setWidgets] = useState<Widget[]>([])
     const {authContextState} = useContext(AuthContext)
-
+    
     useEffect(() => {
         
         const fillWidgets = async() => {
@@ -54,15 +46,15 @@ export const useDashboard = () => {
 
                 if(data.accepted){
                     setWidgets(data.widgets)
-                    console.log(data.widgets);
+                    //console.log(data.widgets);
                     
                 }
                 else {
-                    console.log(data.widgets);
+                   // console.log(data.widgets);
                 }
 
             }catch(e){
-                console.log("server error");
+               // console.log("server error");
             }
         }
 

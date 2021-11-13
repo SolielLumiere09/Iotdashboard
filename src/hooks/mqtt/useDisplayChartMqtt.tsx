@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import mqtt from 'mqtt'
 import moment from 'moment';
+import { mqttConfiguration, MQTT_SERVER } from 'contexts/app/Generalvariables';
 
 export const useDisplayChartMqtt = (widgetId : string, labels : Array<String>,  data : Array<number>, topicToSubscribe : string,  property : string) => {
     
@@ -11,11 +12,10 @@ export const useDisplayChartMqtt = (widgetId : string, labels : Array<String>,  
 
     
     const client = useMemo(() => {
-        return mqtt.connect("http:/localhost", {
-            port : 8083,
-            protocol : 'ws',
-            clientId : widgetId,
-            path : '/mqtt'
+        return mqtt.connect(MQTT_SERVER, {
+            ...mqttConfiguration,
+            clientId : widgetId + Math.random() * 0xFFFF,
+           
         })
     }, [widgetId])
 

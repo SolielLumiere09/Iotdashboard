@@ -5,7 +5,7 @@ import { DisplayChartMqtt, Props as DsiplayChartProps } from '../../components/a
 import { MapDeviceMqtt, Props as MapDeviceProps } from 'components/app/Mqtt/MapDeviceMqtt';
 
 
-type ComponentProps = BooleanBtnProps | DisplayMqttProps | DsiplayChartProps | MapDeviceProps
+export type ComponentProps = BooleanBtnProps | DisplayMqttProps | DsiplayChartProps | MapDeviceProps
 type TypeComponent = 
     | 'BooleanBtnMqtt'
     | 'DisplayMqtt'
@@ -14,18 +14,11 @@ type TypeComponent =
 
 interface Props {
     type : TypeComponent
-    size : {
-        xs : number
-        sm : number 
-        md : number 
-        lg : number 
-        xl : number
-    }
     props : ComponentProps
 }
 
 
-export const Widget = ({type, size, props} : Props) => {
+export const Widget = ({type, props} : Props) => {
 
     const renderComponent = () => {
         let Item = <></>
@@ -48,7 +41,7 @@ export const Widget = ({type, size, props} : Props) => {
     }
 
     return (
-        <Col {...size}>
+        <Col xs={12} sm={6} md={6} lg={4} xl={3}>
             {renderComponent()}
         </Col>
     )

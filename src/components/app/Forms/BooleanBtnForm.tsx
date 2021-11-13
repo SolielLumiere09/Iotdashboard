@@ -6,7 +6,7 @@ import { BackgroundColorContext, classMappingColors } from 'contexts/core/Backgr
 
 
 export const BooleanBtnForm = () => {
-    const {btnState, clickHandler, handleSubmit, register, size, sizeProperties} = useBooleanBtnForm()
+    const {btnState, clickHandler, handleSubmit, register, size} = useBooleanBtnForm()
     
 
     const renderInputs = () => {
@@ -41,58 +41,29 @@ export const BooleanBtnForm = () => {
                     register={register('IconName')}
                 />
                 <InputField
-                    size={size}
+                    size={{...size, xl : 12}}
                     label={'Topic To Publish'}
                     placeholder="Enter the topic to publish"
                     type='text'
                     register={register('Topic')}
                 />
+            
                 <InputField
                     size={size}
-                    label={'Property to send'}
+                    label={'Payload when On'}
                     placeholder="Enter the property to send the message"
-                    type='text'
-                    register={register('Property')}
+                    type='textarea'
+                    register={register('payloadWhenOn')}
                 />
-
-                <Col xs={12}/>
-
-                <InputField
-                    size={sizeProperties}
-                    label={'X-Small'}
-                    placeholder="xs"
-                    type='number'
-                    register={register('xs')}
+                 <InputField
+                    size={size}
+                    label={'Payload when Off'}
+                    placeholder="Enter the property to send the message"
+                    type='textarea'
+                    register={register('payloadWhenOff')}
                 />
-                <InputField
-                    size={sizeProperties}
-                    label={'small'}
-                    placeholder="sm"
-                    type='number'
-                    register={register('sm')}
-                />
-                <InputField
-                    size={sizeProperties}
-                    label={'medium'}
-                    placeholder="md"
-                    type='number'
-                    register={register('md')}
-                />
-                <InputField
-                    size={sizeProperties}
-                    label={'large'}
-                    placeholder="lg"
-                    type='number'
-                    register={register('lg')}
-                />
-                <InputField
-                    size={sizeProperties}
-                    label={'x-large'}
-                    placeholder="xl"
-                    type='number'
-                    register={register('xl')}
-                />
-
+            
+            
                 <Col xs={12}>
                 <BackgroundColorContext.Consumer>
                 {({color}) => ( 
