@@ -4,6 +4,7 @@ import { BooleanBtnRow } from './BooleanBtnRow';
 import { useDashboard } from '../../../hooks/views/useDashboard';
 import { Props as BooleanBtnProps } from 'components/app/Mqtt/BooleanBtnMqtt';
 import { Props as DisplayMqttProps } from 'components/app/Mqtt/DisplayMqtt';
+import { DisplayRow } from './DisplayRow';
 
 export const ViewWidgets = () => {
     const {widgets} = useDashboard()
@@ -27,7 +28,7 @@ export const ViewWidgets = () => {
         <div>
             <Card>
                 <CardBody>
-                    <CardTitle> View Widgets </CardTitle>
+                    <CardTitle className="text-center"> View Widgets </CardTitle>
                     <CardTitle> BooleanBtn Widgets </CardTitle>
                     
                     <Table className="overflow-hidden" responsive>
@@ -35,12 +36,12 @@ export const ViewWidgets = () => {
                             <tr>
                                 <th>WidgetId</th>
                                 <th>Title</th>
-                                <th className="text-center">IconSize</th>
-                                <th className="text-right">IconName</th>
-                                <th className="text-right">TopicToPublish</th>
-                                <th className="text-right">PayloadOn</th>
-                                <th className="text-right">PayloadOff</th>
-                                <th className="text-right">Acction</th>
+                                <th className="text-left">IconSize</th>
+                                <th className="text-left">IconName</th>
+                                <th className="text-left">TopicToPublish</th>
+                                <th className="text-left">PayloadOn</th>
+                                <th className="text-left">PayloadOff</th>
+                                <th className="text-left">Action</th>
                                 
                             </tr>
                             {
@@ -69,22 +70,18 @@ export const ViewWidgets = () => {
                             <tr>
                                 <th>WidgetId</th>
                                 <th>Title</th>
-                                <th className="text-center">Unit</th>
-                                <th className="text-right">Topic To Subscribe</th>
-                                <th className="text-right">Property</th>
-                                <th className="text-right">Action</th>
+                                <th className="text-left">Unit</th>
+                                <th className="text-left">Topic To Subscribe</th>
+                                <th className="text-left">Property</th>
+                                <th className="text-left">Action</th>
                             </tr>
                             {
                                getDisplayWidgets().map(value => {
                                    return (
-                                    <tr>
-                                        <td>{value.widgetId}</td>
-                                        <td>{value.props.title}</td>
-                                        <td className="text-center">{(value.props as DisplayMqttProps).unit}</td>
-                                        <td className="text-right">{(value.props as DisplayMqttProps).topicToSubscribe}</td>
-                                        <td className="text-right">{(value.props as DisplayMqttProps).property}</td>
-
-                                    </tr>
+                                       <DisplayRow
+                                            key={value.widgetId}
+                                            {...value.props as DisplayMqttProps}
+                                       />
                                    )
                                })
                             }
