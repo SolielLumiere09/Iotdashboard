@@ -27,7 +27,7 @@ function AdminNavbar(props) {
   const [collapseOpen, setcollapseOpen] = useState(false);
   const [modalSearch, setmodalSearch] = useState(false);
   const [color, setcolor] = useState("navbar-transparent");
-  const {setState, authContextState} = useContext(AuthContext)
+  const {setState} = useContext(AuthContext)
   const navigator = useHistory()
 
   useEffect(() => {

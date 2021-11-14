@@ -43,8 +43,8 @@ export const BooleanBtn = ({widgetId, title, iconSize, iconName, onClick} : Prop
     return (
         <BackgroundColorContext.Consumer>
             {({color}) => (
-                <Card>
-                    <CardBody>
+                <Card style={{height : '210px'}}>
+                    <CardBody className="mt-4">
                         <CardTitle className="text-center h1">{title}</CardTitle>
                         <div className="d-flex justify-content-between">
                             <IconContext.Provider value={{

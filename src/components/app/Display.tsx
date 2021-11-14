@@ -17,8 +17,8 @@ export const Display = ({title, measure, unit, date} : Props) => {
     return (
         <BackgroundColorContext.Consumer>
              {({color}) => (
-                 <Card> 
-                    <CardBody>
+                 <Card style={{height : '210px'}}> 
+                    <CardBody className="mt-3">
                         <CardText className="text-center h1 m-1">{title}</CardText>
                         <CardText className="text-center" style={{fontSize : 40, color : mappingColors[color]}}>{measure} {unit}</CardText>
                         <CardText className="text-center h4">{date}</CardText>
