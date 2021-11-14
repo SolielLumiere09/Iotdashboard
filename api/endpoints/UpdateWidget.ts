@@ -17,12 +17,13 @@ updateWidgetEndpoint.post<any, any, any, Attributes, any>('/api/updateWidget', a
     try {
         const {widgetId, props} = req.body
         
-        //here needs to validate
+     
 
         const {acknowledged} = await Widget.updateOne({
             widgetId
         }, {
             props
+           
         })
         
         if(acknowledged){

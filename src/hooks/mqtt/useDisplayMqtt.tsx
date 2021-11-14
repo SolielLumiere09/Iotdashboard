@@ -32,7 +32,6 @@ export const useDisplayMqtt = (widgetId : string, topicToSubscribe : string, pro
 
         client.on('message', (topic, payload) => {
             const msg = JSON.parse(payload.toString())
-            console.log("message arrived");
             
             if(topic === topicToSubscribe && msg[property] !== undefined){
                 window.localStorage.setItem(widgetId, msg[property])

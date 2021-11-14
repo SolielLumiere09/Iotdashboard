@@ -2,11 +2,14 @@ import { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { axiosInstance } from 'contexts/app/Generalvariables';
 import { NotificationContextProvider } from 'contexts/app/NotificationContext';
-import {Props} from 'components/app/Mqtt/BooleanBtnMqtt'
+import { ComponentProps } from '../../components/app/Widget';
+
+
+
 
 interface DataToSend{
     widgetId : string 
-    props : Props
+    props : ComponentProps
 }
 
 interface Response {
@@ -14,24 +17,20 @@ interface Response {
     accepted : boolean
 }
 
-export const useBooleanBtnRow = (iconName, iconSize, payloadWhenOff, payloadWhenOn, publishTopic, title, widgetId) => {
-    const [rowState, setRowState] = useState({
-        iconName,
-        iconSize,
-        payloadWhenOff,
-        payloadWhenOn,
-        publishTopic,
-        title,
-        widgetId
-    })
+
+export const useEditableRow = (widgetId : string, props : ComponentProps) => {
+    const [rowState, setRowState] = useState(props)
+
     const [editView, setEditView] = useState(false)
-    const {register, handleSubmit} = useForm<Props>()
+    const {register, handleSubmit} = useForm<ComponentProps>()
     const {openNotification} = useContext(NotificationContextProvider)
     const [visible, setVisible] = useState(true)
     
-    const saveValues = async (formData : Props) => {
+    const saveValues = async (formData : ComponentProps) => {
         try{
             if(editView){
+                console.log(JSON.stringify(formData, null, 3));
+                
                 const dataToSend : DataToSend = {
                     widgetId,
                     props : formData

@@ -1,7 +1,7 @@
 import moongose, { Schema, SchemaDefinitionType } from 'mongoose'
 
 interface BooleanBtnMqtt {
-    deviceId : string
+    widgetId : string
     title : string 
     iconSize : string 
     iconName : string
@@ -11,7 +11,7 @@ interface BooleanBtnMqtt {
 }
 
 interface DisplayChartMqtt {
-    deviceId : string
+    widgetId : string
     title : string,
     unit : string, 
     labels : Array<String>
@@ -21,7 +21,7 @@ interface DisplayChartMqtt {
 }
 
 interface DisplayMqtt {
-    deviceId : string
+    widgetId : string
     title : string
     unit : string
     topicToSubscribe : string 
@@ -29,7 +29,7 @@ interface DisplayMqtt {
 }
 
 interface MapDeviceMqtt {
-    deviceId : string
+    widgetId : string
     title : string 
     height : number
     popupMesage : string

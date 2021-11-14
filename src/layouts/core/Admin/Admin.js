@@ -21,7 +21,7 @@ import { Route, Switch, Redirect, useLocation } from "react-router-dom";
 import PerfectScrollbar from "perfect-scrollbar";
 
 // core components
-import AdminNavbar from "components/core/Navbars/AdminNavbar.js";
+import AdminNavbar from "components/core/Navbars/AdminNavbar";
 import Footer from "components/core/Footer/Footer.js";
 import Sidebar from "components/core/Sidebar/Sidebar.js";
 import FixedPlugin from "components/core/FixedPlugin/FixedPlugin.js";
