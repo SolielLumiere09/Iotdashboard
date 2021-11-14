@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { axiosInstance } from 'contexts/app/Generalvariables';
 import { NotificationContextProvider } from 'contexts/app/NotificationContext';
 import { ComponentProps } from '../../components/app/Widget';
+import { AuthContext } from 'contexts/app/AuthContext';
 
 
 
@@ -25,6 +26,7 @@ export const useEditableRow = (widgetId : string, props : ComponentProps) => {
     const {register, handleSubmit} = useForm<ComponentProps>()
     const {openNotification} = useContext(NotificationContextProvider)
     const [visible, setVisible] = useState(true)
+    const {authContextState} = useContext(AuthContext)
     
     const saveValues = async (formData : ComponentProps) => {
         try{
@@ -36,7 +38,11 @@ export const useEditableRow = (widgetId : string, props : ComponentProps) => {
                     props : formData
                 }
             
-                const {data} = await axiosInstance.post<Response>('/api/updateWidget', dataToSend)
+                const {data} = await axiosInstance.post<Response>('/api/updateWidget', dataToSend, {
+                    headers : {
+                        "auth-token" : authContextState.token
+                    }
+                })
     
                 if(data.accepted){
                     setRowState(formData)

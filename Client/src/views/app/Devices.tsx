@@ -37,6 +37,9 @@ export const Devices = () => {
                 const {data} = await axiosInstance.get<Response[]>('/api/getDevices', {
                     params : {
                         userId : authContextState.userId
+                    },
+                    headers : {
+                        "auth-token" : authContextState.token
                     }
                 })
     

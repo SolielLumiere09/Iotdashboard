@@ -1,8 +1,9 @@
-/build
-/node_modules
+/Client/build
+/Client/node_modules
 package-lock.json
 /build
 .vscode
 .eslintcache
 .env
-/api/mongodata
+/Server/mongodata
+/Server/node_modules

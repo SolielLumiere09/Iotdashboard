@@ -65,7 +65,11 @@ export const useDisplayForm = () => {
                 }
             }
 
-            const {data} = await axiosInstance.post<Response>('/api/addWidget', payloadToSend)
+            const {data} = await axiosInstance.post<Response>('/api/addWidget', payloadToSend, {
+                headers : {
+                    "auth-token" : authContextState.token
+                }
+            })
             
             if(data.accepted){
                 openNotification(data.msg)

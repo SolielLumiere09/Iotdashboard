@@ -81,7 +81,11 @@ export const useBooleanBtnForm = () => {
                 
             }
             
-            const {data} = await axiosInstance.post<Response>("/api/addWidget", widgetPropertyToSend)
+            const {data} = await axiosInstance.post<Response>("/api/addWidget", widgetPropertyToSend, {
+                headers : {
+                    "auth-token" : authContextState.token
+                }
+            })
 
 
             if(data.accepted){

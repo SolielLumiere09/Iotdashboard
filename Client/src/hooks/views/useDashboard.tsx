@@ -41,6 +41,9 @@ export const useDashboard = () => {
                 const {data} = await axiosInstance.get<WidgetResponse>('/api/getWidgets', {
                     params : {
                         userId : authContextState.userId
+                    },
+                    headers : {
+                        "auth-token" : authContextState.token
                     }
                 })
 

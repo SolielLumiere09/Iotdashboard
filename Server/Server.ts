@@ -10,7 +10,7 @@ import { usersEndpoint } from './endpoints/Users';
 import { widgetsEndpoint } from './endpoints/Widgets';
 
 const {parsed : {REACT_APP_MONGO_DB_ENDPOINT, REACT_APP_MONGODB_USER, REACT_APP_MONGO_DB_PASSWORD, REACT_APP_DATABASE, REACT_APP_TOKEN_AUTH}} = config({
-    path : '../.env'
+    path : '../Client/.env'
 })
 
 const app = express()
@@ -21,17 +21,18 @@ app.use(cors({
 }))
 app.use(bodyParser())
 
-//set middleware
-app.use('/api',(req, res, next) => {
-    // const token = req.header('auth-token')
-    // if (!token) return res.status(401).json({ error: 'Access Denied' })
-    // try {
-    //     jwt.verify(token, REACT_APP_TOKEN_AUTH)
-    //     next() 
-    // } catch (error) {
-    //     res.status(400).json({error: 'Invalid Token'})
-    // }
-    next()
+//set middleware to ptotect the api's
+app.use('/api', async (req, res, next) => {
+    try {
+        const token = req.header('auth-token')
+        if (!token) return res.status(401).json({ error: 'Access Denied' })
+        jwt.verify(token, REACT_APP_TOKEN_AUTH)
+        next() 
+    } catch (error) {
+        console.log("error", error);
+        res.status(400).json({error: 'Invalid Token'})
+    }
+
 })
 
 //set endpoints
