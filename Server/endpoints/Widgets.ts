@@ -68,10 +68,10 @@ widgetsEndpoint.post<any, any, any, DeleteWidget, any>('/api/deleteWidget', asyn
 
     try {
         const {widgetId} = req.body
-        
         const {acknowledged} = await Widget.deleteOne({
             widgetId
         })
+        
 
         if(acknowledged){
             response.accepted = true 

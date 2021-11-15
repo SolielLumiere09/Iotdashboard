@@ -77,5 +77,72 @@ deviceEndpoint.post<any, any, any, Attributes, any>('/api/addDevice', async (req
 
 
 
+interface UpdateDeviceReq {
+    deviceId : string 
+    deviceName : string 
+    username : string
+    password : string
+}
+deviceEndpoint.post<any, any, any, UpdateDeviceReq, any>("/api/updateDevice", async (req, res) => {
+    const response = {
+        msg : '',
+        accepted : false
+    } 
+    
+    try{
+        const {deviceId, deviceName, password, username} = req.body
+
+
+        const {acknowledged} = await Device.updateOne({
+            deviceId
+        }, {
+            deviceName,
+            password,
+            username
+        })
+
+        response.accepted = acknowledged
+        response.msg = acknowledged ? 'Update Complete' : 'There was an error updating'
+
+    }catch {
+        response.msg = "Server error"
+
+    }
+
+    res.send(response)
+})
+
+
+interface DeleteDeviceReq {
+    deviceId : string
+}
+
+deviceEndpoint.post<any, any, any, DeleteDeviceReq, any>("/api/deleteDevice", async (req, res) => {
+    const response = {
+        msg : '',
+        accepted : false
+    }
+
+    try{
+        const {deviceId} = req.body
+        const {acknowledged} = await Device.deleteOne({deviceId})
+
+        if(acknowledged){
+            response.accepted = true
+            response.msg = 'Delete Succesfully'
+        }else {
+            response.accepted = false
+            response.msg = "There was an error deleting the device"
+        }
+
+        
+
+    }catch {
+        response.msg = "Server Error"
+
+    }
+
+    res.send(response)
+})
 
 export {deviceEndpoint}

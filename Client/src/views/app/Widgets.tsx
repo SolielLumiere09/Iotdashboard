@@ -4,6 +4,8 @@ import { ViewWidgets } from "components/app/Views/ViewWidgets"
 
 export const Widgets = () => {  
 
+
+
     return (
         <div className="content">
             <CreateWidget/>

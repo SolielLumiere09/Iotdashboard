@@ -12,20 +12,16 @@ import {
   DropdownMenu,
   DropdownItem,
   UncontrolledDropdown,
-  Input,
   NavbarBrand,
   Navbar,
   NavLink,
   Nav,
   Container,
-  Modal,
   NavbarToggler,
-  ModalHeader,
 } from "reactstrap";
 
 function AdminNavbar(props) {
   const [collapseOpen, setcollapseOpen] = useState(false);
-  const [modalSearch, setmodalSearch] = useState(false);
   const [color, setcolor] = useState("navbar-transparent");
   const {setState} = useContext(AuthContext)
   const navigator = useHistory()
@@ -53,10 +49,6 @@ function AdminNavbar(props) {
       setcolor("bg-white");
     }
     setcollapseOpen(!collapseOpen);
-  };
-  // this function is to open the Search modal
-  const toggleModalSearch = () => {
-    setmodalSearch(!modalSearch);
   };
 
   const logOut = () => {
@@ -132,22 +124,6 @@ function AdminNavbar(props) {
           </Collapse>
         </Container>
       </Navbar>
-      <Modal
-        modalClassName="modal-search"
-        isOpen={modalSearch}
-        toggle={toggleModalSearch}
-      >
-        <ModalHeader>
-          <Input placeholder="SEARCH" type="text" />
-          <button
-            aria-label="Close"
-            className="close"
-            onClick={toggleModalSearch}
-          >
-            <i className="tim-icons icon-simple-remove" />
-          </button>
-        </ModalHeader>
-      </Modal>
     </>
   );
 }

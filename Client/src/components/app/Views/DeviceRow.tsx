@@ -1,16 +1,9 @@
-import React from 'react'
-import { Button } from 'reactstrap';
+import { Button} from 'reactstrap';
+import { useDeviceRow } from '../../../hooks/views/useDeviceRow';
+import { CustomModal } from '../CustomModal';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
 
 
-/*
-userId:     string,
-    deviceId:   string,
-    deviceName: string,
-    username:   string,
-    password:   string,
-*/
 
 interface Props {
     deviceId:   string,
@@ -19,31 +12,23 @@ interface Props {
     password:   string
 }
 
+
+
 export const DeviceRow = (props : Props) => {
-    
-    const {register, handleSubmit} = useForm<Props>()
-    const [editView, setEditView] = useState(false)
-    const [isHidden, setIsHidden] = useState(false)
-    const [rowState, setRowState] = useState(props)
-    const {deviceId, deviceName, password, username} = rowState
-    
-    const onSave = async (formData : Props) => {
-        console.log(formData);
-        setEditView(false)
-    }
-
-    const onChangeView = async () => {
-        setEditView(true)
-    }
-
-    const onDelete = async () => {  
-        setIsHidden(true)
-    }
-
+    const {deviceId,deviceName,handleSubmit,isHidden,onChangeView,onDelete,onSave,password,register, username, editView} = useDeviceRow(props)
+    const [isOpen, setIsOpen] = useState(false)
     return (
 
         <>
-          
+
+            <CustomModal
+                isOpen = {isOpen}
+                setIsOpenModal = {setIsOpen}
+                modalBody = {`Are you sure you want to delete ---> ${deviceName}`}
+                modalHeader ={"Warning"}
+                onAccept = {onDelete}
+                
+            />
             { 
             !isHidden &&  
             (<tr key={deviceId}>
@@ -58,7 +43,9 @@ export const DeviceRow = (props : Props) => {
                     <Button className="btn-icon" color="success" size="sm" onClick = {onChangeView}>
                         <i className="fa fa-edit"></i>
                     </Button>{` `}
-                    <Button className="btn-icon" color="danger" size="sm"  onClick = {onDelete}>
+                    <Button className="btn-icon" color="danger" size="sm"  onClick = {() => {
+                        setIsOpen(true)
+                    }}>
                         <i className="fa fa-times" />
                     </Button>
                 </td>

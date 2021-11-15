@@ -1,9 +1,11 @@
 import React from 'react'
 import { Props as DisplayMqttProps } from 'components/app/Mqtt/DisplayMqtt';
-import { Button } from 'reactstrap';
+import { Button} from 'reactstrap';
 import { useEditableRow } from '../../../hooks/views/useEditableRow';
 
 export const DisplayRow = ({widgetId, title, unit, topicToSubscribe, property} : DisplayMqttProps) => {
+
+
     const { deleteWidget, 
         editView, 
         enableEdit, 
@@ -24,6 +26,8 @@ export const DisplayRow = ({widgetId, title, unit, topicToSubscribe, property} :
     
     return (
         <>
+
+
         
             {
             visible &&
