@@ -1,11 +1,14 @@
 import React from 'react'
 import { Row, Col, Button } from 'reactstrap';
 import { DisplayChart } from '../DisplayChart';
-import { useMemo, useEffect, useState } from 'react';
+import { useMemo, useEffect, useState, useContext } from 'react';
 import { InputField } from './InputField';
 import { useForm } from 'react-hook-form';
 import { BackgroundColorContext, classMappingColors } from 'contexts/core/BackgroundColorContext';
 import moment from 'moment';
+import { axiosInstance, WidgetDBprops, Response } from 'contexts/app/Generalvariables';
+import { AuthContext } from 'contexts/app/AuthContext';
+import { NotificationContextProvider } from 'contexts/app/NotificationContext';
 
 interface Fields {
     widgetId : string
@@ -28,6 +31,7 @@ interface FormStatus {
 export const DisplayChartForm = () => {
 
     const {register, watch, handleSubmit} = useForm<Fields>()
+    const {openNotification} = useContext(NotificationContextProvider)
     const [formStatus, setFormStatus] = useState<FormStatus>({
         widgetId : '123123',
         title : 'test',
@@ -35,6 +39,7 @@ export const DisplayChartForm = () => {
         date : moment().format('MMMM Do YYYY, h:mm:ss a'),
         fieldNumber : 5
     })
+    const {authContextState} = useContext(AuthContext)
     
     const size = useMemo(() => {    
         return {
@@ -64,6 +69,45 @@ export const DisplayChartForm = () => {
             subscription.unsubscribe()
         }
     }, [watch])
+
+    const clickHandler = async (formData : Fields) => {
+        try{
+
+            const widgetPropertyToSend : WidgetDBprops = {
+                userId : authContextState.userId,
+                widgetId : formData.widgetId,
+                type : 'DisplayChartMqtt',
+                props : {
+                    widgetId : formData.widgetId,
+                    title : formData.title,
+                    unit : formData.unit, 
+                    labels :  Array.from(Array(Number(formStatus.fieldNumber < 0 ? 5 : formStatus.fieldNumber)).keys()).map(value => moment().format('h:mm:ss')),
+                    data : Array.from(Array(Number(formStatus.fieldNumber < 0 ? 5 : formStatus.fieldNumber)).keys()),
+                    topicToSubscribe : formData.topicToSubscribe ,
+                    property : formData.property
+
+                }
+                
+            }
+
+            const {data} = await axiosInstance.post<Response>('/api/addWidget', widgetPropertyToSend, {
+                headers : {
+                    "auth-token" : authContextState.token
+                }
+            })
+            
+            if(data.accepted){
+                openNotification(data.msg)
+            }else {
+                openNotification(data.msg)
+            }
+
+
+        }catch(e){
+
+            openNotification("Error!!");
+        }
+    }
 
 
     const renderInputs = () => {
@@ -123,7 +167,7 @@ export const DisplayChartForm = () => {
                     {({color}) => (
                         
                         <Col xs={12}>
-                            <Button color={classMappingColors[color]}>Save</Button>
+                            <Button color={classMappingColors[color]} onClick={handleSubmit(clickHandler)}>Save</Button>
                         </Col>
                         
                     )}
@@ -147,8 +191,8 @@ export const DisplayChartForm = () => {
                 <DisplayChart
                    title = {formStatus.title}
                    unit = {formStatus.unit}
-                   data = {Array.from(Array(Number(formStatus.fieldNumber)).keys())}
-                   labels = {Array.from(Array(Number(formStatus.fieldNumber)).keys()).map(value => String(value))}
+                   data = {Array.from(Array(Number(formStatus.fieldNumber < 0 ? 5 : formStatus.fieldNumber)).keys())}
+                   labels = {Array.from(Array(Number(formStatus.fieldNumber < 0 ? 5 : formStatus.fieldNumber)).keys()).map(value => moment().format('h:mm:ss'))}
                    measure={12}
                    date={formStatus.date}
                 />
