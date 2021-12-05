@@ -3,6 +3,7 @@ import { Card, CardBody, FormGroup, Label, Input, CardTitle } from 'reactstrap';
 import { useState } from 'react';
 import { BooleanBtnForm } from 'components/app/Forms/BooleanBtnForm';
 import { DisplayForm } from 'components/app/Forms/DisplayForm';
+import { DisplayChartForm } from '../Forms/DisplayChartForm';
 
 export const CreateWidget = () => {
     const [option, setOption] = useState(0)
@@ -11,7 +12,6 @@ export const CreateWidget = () => {
     BooleanButton : 0,
     Display : 1,
     DisplayChart : 2,
-    MapDevice : 3
 }
 
 
@@ -25,6 +25,7 @@ switch(option){
         break
     case 1: component = <DisplayForm/>
         break
+    case 2: component = <DisplayChartForm/>
 }
 
 
@@ -47,7 +48,6 @@ return (
                                 <option onClick={() => setOption(0)}>BooleanButton</option>
                                 <option onClick={() => setOption(1)}>Display</option>
                                 <option onClick={() => setOption(2)}>DisplayChart</option>
-                                <option onClick={() => setOption(3)}>MapDevice</option>
                             </Input>
                         </FormGroup>
 

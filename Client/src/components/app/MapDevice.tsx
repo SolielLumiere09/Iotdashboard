@@ -18,7 +18,7 @@ export const MapDevice = ({height, position, popupMesage, title} : Props) => {
         <Card style={{height}}>
             <CardBody>
                 <CardText className="h1 text-center">{title}</CardText>
-                <MapContainer center={position} zoom={30} scrollWheelZoom={true} className='h-100'>
+                <MapContainer center={position} zoom={10} scrollWheelZoom={true} className='h-100'>
                     <TileLayer
                         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

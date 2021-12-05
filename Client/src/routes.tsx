@@ -1,5 +1,6 @@
 import { Dashboard } from "views/app/Dashboard";
 import { Devices } from "views/app/Devices";
+import { Map } from "views/app/Map";
 import { Widgets } from "views/app/Widgets";
 
 /*
@@ -69,7 +70,7 @@ var routes : Routes[] = [
     path : "/devices",
     name : "Devices",
     rtlName : 'Omar Valdivia',
-    icon : "tim-icons icon-chart-pie-36",
+    icon : "tim-icons icon-send",
     component : Devices,
     layout : '/admin'
   },
@@ -77,9 +78,17 @@ var routes : Routes[] = [
     path : '/Widgets',
     name : 'Widgets',
     rtlName : 'Omar Valdivia',
-    icon : 'tim-icons icon-shape-star',
+    icon : 'tim-icons icon-bulb-63',
     component : Widgets,
     layout : '/admin'
+  },
+  {
+    path: "/Maps",
+    name: "Maps",
+    rtlName: "Omar Valdivia",
+    icon: "tim-icons icon-world",
+    component: Map,
+    layout: "/admin",
   }
 ];
 export default routes;

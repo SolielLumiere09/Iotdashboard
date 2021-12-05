@@ -74,6 +74,10 @@ export const useEditableRow = (widgetId : string, props : ComponentProps) => {
 
             const {data} = await axiosInstance.post<Response>('/api/deleteWidget', {
                 widgetId
+            }, {
+                headers : {
+                    "auth-token" : authContextState.token
+                }
             })
 
             if(data.accepted){
