@@ -3,7 +3,10 @@ import { useState, useEffect, useContext } from 'react';
 import classNames from "classnames";
 import { AuthContext } from 'contexts/app/AuthContext';
 import { useHistory } from 'react-router-dom';
-import { APP_LOGIN_STATUS } from 'contexts/app/Generalvariables';
+import { APP_LOGIN_STATUS, axiosInstance } from 'contexts/app/Generalvariables';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { useForm } from 'react-hook-form';
+import { NotificationContextProvider } from 'contexts/app/NotificationContext';
 
 
 import {
@@ -20,11 +23,25 @@ import {
   NavbarToggler,
 } from "reactstrap";
 
+interface PasswordChangeAttr {
+  id : string
+  password : string
+  newPassword : string
+}
+
+interface Response {
+  accepted : boolean,
+  msg : string
+}
+
 function AdminNavbar(props) {
   const [collapseOpen, setcollapseOpen] = useState(false);
   const [color, setcolor] = useState("navbar-transparent");
-  const {setState} = useContext(AuthContext)
+  const {setState, authContextState} = useContext(AuthContext)
+  const [modalOpen, setModalOpen] = useState(false)
   const navigator = useHistory()
+  const {register, handleSubmit} = useForm<PasswordChangeAttr>();
+  const {openNotification} = useContext(NotificationContextProvider)
 
   useEffect(() => {
     window.addEventListener("resize", updateColor);
@@ -61,6 +78,37 @@ function AdminNavbar(props) {
       window.localStorage.setItem(APP_LOGIN_STATUS, null);
 
       navigator.push('/Login')
+  }
+
+  const changepassword = async (formData : PasswordChangeAttr) => {
+    console.log(formData);
+
+    try{
+      const {data} = await axiosInstance.post<Response>("/updatePassword", {
+        ...formData,
+        id : authContextState.userId
+      }, 
+      {
+        headers : {
+          "auth-token" : authContextState.token
+        } 
+      })
+
+      if(data.accepted){
+        openNotification(data.msg, "success")
+        setModalOpen(false)
+      }
+      else {
+        openNotification(data.msg, "warning")
+      }
+
+
+    }catch(e){
+      openNotification("Server error", "danger")
+    }
+
+
+   
   }
 
   return (
@@ -108,10 +156,7 @@ function AdminNavbar(props) {
                 </DropdownToggle>
                 <DropdownMenu className="dropdown-navbar" right tag="ul">
                   <NavLink tag="li">
-                    <DropdownItem className="nav-item">Profile</DropdownItem>
-                  </NavLink>
-                  <NavLink tag="li">
-                    <DropdownItem className="nav-item">Settings</DropdownItem>
+                    <DropdownItem className="nav-item" onClick={() => setModalOpen(true)}>Change Password</DropdownItem>
                   </NavLink>
                   <DropdownItem divider tag="li" />
                   <NavLink tag="li">
@@ -124,6 +169,32 @@ function AdminNavbar(props) {
           </Collapse>
         </Container>
       </Navbar>
+
+      <Modal 
+        isOpen ={modalOpen}
+      >
+        <ModalHeader>
+          Change password
+        </ModalHeader>
+        <ModalBody>
+          <input type="password" className="form-control text-black-50" placeholder="Current Password" {...register("password")}/>
+          <input type="password" className="form-control text-black-50 mt-3" placeholder="New Password" {...register("newPassword")}/>
+          
+        </ModalBody>
+        <ModalFooter className = "p-3">
+          <Button
+            color="primary"
+            onClick={handleSubmit(changepassword)}
+          >
+            Accept
+          </Button>
+          {' '}
+          <Button onClick={() => {setModalOpen(false)}}>
+            Cancel
+          </Button>
+        </ModalFooter>
+      </Modal>
+
     </>
   );
 }

@@ -4,7 +4,9 @@ import { BooleanBtnRow } from './BooleanBtnRow';
 import { useDashboard } from '../../../hooks/views/useDashboard';
 import { Props as BooleanBtnProps } from 'components/app/Mqtt/BooleanBtnMqtt';
 import { Props as DisplayMqttProps } from 'components/app/Mqtt/DisplayMqtt';
+import { Props as DisplayChartMqttProps } from 'components/app/Mqtt/DisplayChartMqtt';
 import { DisplayRow } from './DisplayRow';
+import { DisplayChartRow } from './DisplayChartRow';
 
 export const ViewWidgets = () => {
     const {widgets} = useDashboard()
@@ -21,6 +23,12 @@ export const ViewWidgets = () => {
     const getDisplayWidgets = () => {
         return widgets.filter(value => {
             return value.type === 'DisplayMqtt'
+        })
+    }
+
+    const getDisplayChartWidgets = () => {
+        return widgets.filter(value => {
+            return value.type === 'DisplayChartMqtt'
         })
     }
 
@@ -58,9 +66,6 @@ export const ViewWidgets = () => {
                                 })
                             }
                         </thead>
-                        <tbody>
-                            
-                        </tbody>
                     </Table>
                     
 
@@ -86,9 +91,30 @@ export const ViewWidgets = () => {
                                })
                             }
                         </thead>
-                        <tbody>
-                            
-                        </tbody>
+                    </Table>
+
+                    <CardTitle> Display Chart Widgets </CardTitle>
+                    <Table className="overflow-hidden" responsive>
+                        <thead>
+                            <tr>
+                                <th>WidgetId</th>
+                                <th>Title</th>
+                                <th className="text-left">Unit</th>
+                                <th className="text-left">Topic To Subscribe</th>
+                                <th className="text-left">Property</th>
+                                <th className="text-left">Action</th>
+                            </tr>
+                            {
+                               getDisplayChartWidgets().map(value => {
+                                   return (
+                                       <DisplayChartRow
+                                            key={value.widgetId}
+                                            {...value.props as DisplayChartMqttProps}
+                                       />
+                                   )
+                               })
+                            }
+                        </thead>
                     </Table>
 
                 </CardBody>

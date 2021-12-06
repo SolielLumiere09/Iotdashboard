@@ -48,11 +48,73 @@ usersEndpoint.get<any, any, any, any, Attributes>('/loginUser', async (req, res)
     res.json(response)
 })
 
+interface PasswordChangeAttr {
+    id : string
+    password : string
+    newPassword : string
+}
+
+usersEndpoint.post<any, any, any, PasswordChangeAttr, any>("/updatePassword", async(req, res) => {
+    const response = {
+        accepted : false,
+        msg : ''
+    }
+
+    try{
+        const {newPassword, password, id} = req.body
+
+        //Get the user
+        const user = await User.findOne({
+            id
+        })
+
+
+        //compare password
+        if(bcrypt.compareSync(password, user.password)){
+           
+            response.accepted = true;
+            const hash = bcrypt.hashSync(newPassword, 10)
+
+            const {acknowledged} = await User.updateOne({
+                id
+            }, {
+                password : hash
+            })
+
+            if(acknowledged)
+            {
+                response.accepted = true;
+                response.msg = "Password changed"
+            }
+            else {
+                response.accepted = false;
+                response.msg = "Error changin password"
+            }
+
+
+
+
+        }else {
+            response.msg = "Verify your password"
+        }
+
+
+    }catch(e)
+    {
+        response.msg = "Server Error"
+    }
+
+
+    res.send(response)
+})
+
 usersEndpoint.post<any, any, any, Attributes, any>('/userRegister', async (req, res) => {
     const response = {
         accepted : false,
         msg : ''
     }
+
+
 
     try{
         const {password, userName} = req.body
