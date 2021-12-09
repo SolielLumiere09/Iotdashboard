@@ -7,7 +7,7 @@ export const Map = () => {
             <MapDevice
                 height = {800}
                 popupMesage = "device"
-                position = {[32, 108]}
+                position = {[32.5011879,-117.0699008]}
                 title = "Map"
             />
         </div>
